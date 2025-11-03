@@ -1,12 +1,10 @@
 from django.contrib import admin
 from .models import Cliente, Contato, Produto, Pedido, ItemPedido, PrecoPersonalizado
 
-# -------------------------
-# Inline de Contatos dentro do Cliente
-# -------------------------
+
 class ContatoInline(admin.TabularInline):
     model = Contato
-    extra = 1  # Mostra 1 linha vazia para adicionar novo contato
+    extra = 1  
     fields = ('nome', 'telefone', 'email')
 
 
@@ -17,9 +15,6 @@ class ClienteAdmin(admin.ModelAdmin):
     inlines = [ContatoInline]
 
 
-# -------------------------
-# Inline de Itens dentro do Pedido
-# -------------------------
 class ItemPedidoInline(admin.TabularInline):
     model = ItemPedido
     extra = 1
@@ -36,18 +31,12 @@ class PedidoAdmin(admin.ModelAdmin):
     inlines = [ItemPedidoInline]
 
 
-# -------------------------
-# Admin de Produto
-# -------------------------
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = ('nome', 'preco')
     search_fields = ('nome',)
 
 
-# -------------------------
-# Admin de Preço Personalizado
-# -------------------------
 @admin.register(PrecoPersonalizado)
 class PrecoPersonalizadoAdmin(admin.ModelAdmin):
     list_display = ('cliente', 'produto', 'preco_especial')
