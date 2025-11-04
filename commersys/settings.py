@@ -41,17 +41,17 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 
 INSTALLED_APPS = [
+    'accounts',
+    'core',
+    'clientes',
+    'produtos',
+    'pedidos',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'django.contrib.admin',
-    'core',
-    'clientes',
-    'produtos',
-    'pedidos',
 ]
 
 MIDDLEWARE = [
