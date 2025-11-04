@@ -1,0 +1,134 @@
+{% extends "registration/base_auth.html" %}
+{% block title %}Cadastro - CommerSys{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card shadow-lg border-0 rounded-lg mt-5">
+      <div class="card-header text-center">
+        <h3 class="my-4">Criar Conta</h3>
+      </div>
+
+      <div class="card-body">
+        <!-- Erros gerais -->
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+              <div>{{ error }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+
+
+        <!-- Formulário -->
+        <form method="post" action="{% url 'accounts:register' %}" novalidate>
+          {% csrf_token %}
+
+          <!-- Usuário -->
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              name="username"
+              id="inputUsername"
+              class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+              placeholder="Usuário"
+              value="{{ form.username.value|default_if_none:'' }}"
+              required
+            />
+            <label for="inputUsername">Usuário</label>
+                {% if form.username.errors %}
+                  {% for error in form.username.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                {% endif %}
+          </div>
+
+          <!-- Email -->
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              name="email"
+              id="inputEmail"
+              class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+              placeholder="E-mail"
+              value="{{ form.email.value|default_if_none:'' }}"
+              required
+            />
+            <label for="inputEmail">E-mail</label>
+                {% if form.email.errors %}
+                  {% for error in form.email.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                {% endif %}
+          </div>
+
+          <!-- Senhas -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="form-floating mb-3 mb-md-0">
+                <input
+                  type="password"
+                  name="password1"
+                  id="inputPassword"
+                  class="form-control {% if form.password1.errors %}is-invalid{% endif %}"
+                  placeholder="Senha"
+                  required
+                />
+                <label for="inputPassword">Senha</label>
+                {% if form.password1.errors %}
+                  {% for error in form.password1.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-floating mb-3 mb-md-0">
+                <input
+                  type="password"
+                  name="password2"
+                  id="inputPasswordConfirm"
+                  class="form-control {% if form.password2.errors %}is-invalid{% endif %}"
+                  placeholder="Confirmar senha"
+                  required
+                />
+                <label for="inputPasswordConfirm">Confirmar senha</label>
+                {% if form.password2.errors %}
+                  {% for error in form.password2.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <!-- Requisitos de senha -->
+          <div class="alert alert-info small mb-4" role="alert">
+            <strong>Requisitos da senha:</strong>
+            <ul class="mb-0 mt-2">
+              <li>Deve conter pelo menos <strong>8 caracteres</strong>;</li>
+              <li>Não deve ser muito comum (ex: “123456”, “senha”);</li>
+              <li>Não pode ser inteiramente numérica;</li>
+              <li>Não deve ser muito parecida com o nome de usuário.</li>
+            </ul>
+          </div>
+
+          <div class="mt-4 mb-0">
+            <div class="d-grid">
+              <button class="btn btn-primary btn-block" type="submit">
+                Criar Conta
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="card-footer text-center py-3">
+        <div class="small">
+          <a href="{% url 'accounts:login' %}">Já tem conta? Faça login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
