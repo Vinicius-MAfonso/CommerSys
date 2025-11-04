@@ -1,8 +1,3 @@
-"""
-Django settings for commersys project.
-...
-"""
-
 from pathlib import Path
 import os
 import dotenv
