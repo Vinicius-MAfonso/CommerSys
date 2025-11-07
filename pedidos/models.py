@@ -2,11 +2,18 @@ from django.db import models
 from clientes.models import Cliente, Contato
 from produtos.models import Produto
 
+class Transportadora(models.Model):
+    nome = models.CharField(max_length=150)
+
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     contato = models.ForeignKey(Contato, on_delete=models.SET_NULL, blank=True, null=True)
-    data_pedido = models.DateTimeField(blank=True, null=True)
+    transportadora = models.ForeignKey(Transportadora, on_delete=models.SET_NULL, blank=True, null=True)
+    data_pedido = models.DateField(blank=True, null=True)
+    saida_pedido = models.DateField(blank=True, null=True)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    valor_frete = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    pagador_frete = models.CharField(max_length=10, blank=True, null=True)
     forma_pagamento = models.CharField(max_length=50, blank=True, null=True)
     nota_fiscal = models.CharField(max_length=20, blank=True, null=True)
     forma_entrega = models.CharField(max_length=100, blank=True, null=True)
