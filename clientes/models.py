@@ -16,4 +16,4 @@ class Contato(models.Model):
     email = models.EmailField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.nome} ({self.cliente.nome_razao_social})"
+        return f"{self.nome}"
