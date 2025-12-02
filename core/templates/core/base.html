@@ -42,22 +42,22 @@
             <div class="nav">
               <div class="sb-sidenav-menu-heading">Navegação</div>
 
-              <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="#{% comment %}{% url 'core:index' %}{% endcomment %}">
+              <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" href="{% url 'core:index' %}">
                 <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
                 Home
               </a>
 
-              <a class="nav-link {% if request.resolver_match.url_name == 'clientes' %}active{% endif %}" href="#{% comment %}{% url 'clientes:clientes' %}{% endcomment %}">
+              <a class="nav-link {% if request.resolver_match.url_name == 'cliente_list' %}active{% endif %}" href="{% url 'clientes:cliente_list' %}">
                 <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                 Clientes
               </a>
 
-              <a class="nav-link {% if request.resolver_match.url_name == 'produtos' %}active{% endif %}" href="#{% comment %}{% url 'produtos:produtos' %}{% endcomment %}">
+              <a class="nav-link {% if request.resolver_match.url_name == 'produto_list' %}active{% endif %}" href="{% url 'produtos:produto_list' %}">
                 <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
                 Produtos
               </a>
 
-              <a class="nav-link {% if request.resolver_match.url_name == 'pedidos' %}active{% endif %}" href="#{% comment %}{% url 'pedidos:pedidos' %}{% endcomment %}">
+              <a class="nav-link {% if request.resolver_match.url_name == 'pedido_list' %}active{% endif %}" href="{% url 'pedidos:pedido_list' %}">
                 <div class="sb-nav-link-icon"><i class="fas fa-shopping-cart"></i></div>
                 Pedidos
               </a>
