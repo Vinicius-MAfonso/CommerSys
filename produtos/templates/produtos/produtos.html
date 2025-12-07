@@ -1,4 +1,78 @@
-{% extends 'core/base.html' %}
-{% block title %}Produtos{% endblock title %}
-{% block content %}
-{% endblock content %}
+{% extends 'core/base.html' %} {% load static %} {% block title %}Produtos{%endblock title %} 
+{% block extra_css %}
+<link
+  href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.min.css"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+/>
+{% endblock extra_css %} 
+{%block content %}
+<h1 class="mt-4">Produtos</h1>
+<ol class="breadcrumb mb-4">
+  <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+  <li class="breadcrumb-item active">Produtos</li>
+</ol>
+<div class="card mb-4">
+  <div class="card-header">
+    <i class="fas fa-table me-1"></i>
+    Tabela de Produtos
+  </div>
+  <div class="card-body">
+    <div class="table-responsive"> 
+        
+        <table
+          id="table"
+          class="table datatable-table text-nowrap" 
+        >
+        <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Descrição</th>
+              <th>Preço</th>
+              <th class="no-sort" data-orderable="false">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for produto in produtos %}
+            <tr id="produto-{{ produto.id }}">
+              <td>{{ produto.nome }}</td>
+              <td>{{ produto.descricao }}</td>
+              
+              {% if produto.preco %}
+                <td>R$ {{ produto.preco }}</td>
+              {% else %}
+                <td>Não Inserido</td>
+              {% endif %}
+                <td class="d-flex justify-content-evenly">
+                  <a
+                    href="{% url 'produtos:produto_edit' produto.id %}"
+                    class="btn btn-sm btn-primary"
+                    ><i class="fas fa-edit"></i></a
+                  >
+                  <form
+                    action="{% url 'produtos:produto_delete' produto.id %}"
+                    method="post"
+                    style="display: inline;"
+                  >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+    </div> 
+    </div>
+</div>
+{% endblock content %} 
+{% block extra_js %}
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
+<script src="{% static 'js/datatable.js' %}"></script>
+{% endblock extra_js %}

@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from .models import Produto
 
 def produto_list(request):
-    return render(request, 'produtos/produtos.html')
-def produto_detail(request, pk):
+    produtos = Produto.objects.all()
+    return render(request, 'produtos/produtos.html', {'produtos': produtos})
+def produto_edit(request, pk):
     pass
 def produto_create(request):
     pass
