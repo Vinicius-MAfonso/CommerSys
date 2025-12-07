@@ -1,7 +1,5 @@
 const dataTable = $("#table").DataTable({
-  columnDefs: [
-      { targets: 'no-sort', orderable: false }
-  ],
+  columnDefs: [],
   info: false,
   lengthMenu: [10, 25, 50, 100],
 

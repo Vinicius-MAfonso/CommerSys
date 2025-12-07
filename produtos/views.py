@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Produto
 
 def produto_list(request):
@@ -11,4 +11,6 @@ def produto_create(request):
 def produto_update(request, pk):
     pass
 def produto_delete(request, pk):
-    pass
+    produto = Produto.objects.get(pk=pk)
+    produto.delete()
+    return redirect('produtos:produto_list')
