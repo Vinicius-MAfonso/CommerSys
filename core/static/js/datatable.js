@@ -1,4 +1,18 @@
 const dataTable = $("#table").DataTable({
+  responsive: true,
+  layout: {
+    topStart: {
+      buttons: [
+        {
+          text: '<i class="fas fa-plus"></i> Novo Produto',
+          className: 'btn btn-success', 
+          action: function (e, dt, node, config) {
+            document.getElementById('createTrigger').click();
+          }
+        }
+      ]
+    }
+  },
   columnDefs: [],
   info: false,
   lengthMenu: [10, 25, 50, 100],
