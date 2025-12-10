@@ -15,12 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     formFields.forEach((element) => {
       element.disabled = !isEditable;
     });
-
     if (saveButton) {
       saveButton.hidden = !isEditable;
       saveButton.disabled = !isEditable;
     }
-
     if (editActions && generalActions) {
       editActions.classList.toggle("d-none", !isEditable);
       editActions.classList.toggle("d-flex", isEditable);
@@ -30,29 +28,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-function fillFormData(rowData) {
+  function fillFormData(rowData) {
     const targets = itemCanva.querySelectorAll("[data-bind]");
     targets.forEach((element) => {
       const bindKey = element.getAttribute("data-bind");
-      let dataValue = rowData[bindKey]; // Use 'let' so we can modify it
+      let dataValue = rowData[bindKey];
 
       if (dataValue !== undefined && dataValue !== "") {
-        
         if (element.type === "number") {
-            dataValue = dataValue.replace(',', '.');
-            
-            dataValue = dataValue.replace(/[^0-9.-]/g, '');
-            
-            element.value = dataValue;
-        } 
-        else if (element.type === "checkbox") {
+          dataValue = dataValue.replace(",", ".");
+
+          dataValue = dataValue.replace(/[^0-9.-]/g, "");
+
+          element.value = dataValue;
+        } else if (element.type === "checkbox") {
           element.checked =
             dataValue === "true" || dataValue === "True" || dataValue === "1";
-        } 
-        else {
+        } else {
           element.value = dataValue;
         }
-
       } else {
         element.value = "";
       }
@@ -60,35 +54,34 @@ function fillFormData(rowData) {
   }
   itemCanva.addEventListener("show.bs.offcanvas", function (event) {
     const button = event.relatedTarget;
-    
-    const isCreateMode = button.id === 'createTrigger';
+
+    const isCreateMode = button.id === "createTrigger";
 
     if (isCreateMode) {
-        activeRow = null;
-        
-        if (form) form.reset();
-        
-        if (form && button.dataset.createUrl) {
-            form.action = button.dataset.createUrl;
-        }
-        
-        setEditMode(true);
+      activeRow = null;
 
+      if (form) form.reset();
+
+      if (form && button.dataset.createUrl) {
+        form.action = button.dataset.createUrl;
+      }
+
+      setEditMode(true);
     } else {
-        activeRow = button.closest("tr");
-        const rowData = activeRow.dataset;
+      activeRow = button.closest("tr");
+      const rowData = activeRow.dataset;
 
-        if (form && rowData.updateUrl) {
-            form.action = rowData.updateUrl;
-        }
+      if (form && rowData.updateUrl) {
+        form.action = rowData.updateUrl;
+      }
 
-        if (deleteForm && rowData.deleteUrl) {
-            deleteForm.action = rowData.deleteUrl;
-        }
+      if (deleteForm && rowData.deleteUrl) {
+        deleteForm.action = rowData.deleteUrl;
+      }
 
-        fillFormData(rowData);
-        
-        setEditMode(false);
+      fillFormData(rowData);
+
+      setEditMode(false);
     }
   });
 

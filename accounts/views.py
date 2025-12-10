@@ -9,7 +9,6 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, f"Bem-vindo, {user.username}! Conta criada com sucesso.")
             return redirect("core:index")
     else:
         form = UserRegisterForm()

@@ -4,7 +4,7 @@ const dataTable = $("#table").DataTable({
     topStart: {
       buttons: [
         {
-          text: '<i class="fas fa-plus"></i> Novo Produto',
+          text: '<i class="fas fa-plus"></i> Novo',
           className: 'btn btn-success', 
           action: function (e, dt, node, config) {
             document.getElementById('createTrigger').click();
