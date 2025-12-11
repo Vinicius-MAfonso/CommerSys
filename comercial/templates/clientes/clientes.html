@@ -39,12 +39,12 @@
             data-telefone="{{ cliente.telefone }}"
             data-endereco="{{ cliente.endereco }}"
             data-inscricao_estadual="{{ cliente.inscricao_estadual }}"
-            data-update-url="{% url 'comercial:clientes_update' pk=cliente.id %}"
-            data-delete-url="{% url 'comercial:clientes_delete' pk=cliente.id %}"
+            data-update-url="{% url 'comercial:editar_cliente' pk=cliente.id %}"
+            data-delete-url="{% url 'comercial:deletar_cliente' pk=cliente.id %}"
             pointer=""
             data-bs-toggle="offcanvas"
-            data-bs-target="#itemCanva"
-            aria-controls="itemCanva"
+            data-bs-target="#itemOffcanvas"
+            aria-controls="itemOffcanvas"
           >
             <td>{{ cliente.nome }}</td>
             <td>{{ cliente.cpf_cnpj }}</td>
@@ -103,11 +103,11 @@
 <div
   class="offcanvas offcanvas-end"
   tabindex="-1"
-  id="itemCanva"
-  aria-labelledby="itemCanvaLabel"
+  id="itemOffcanvas"
+  aria-labelledby="itemOffcanvasLabel"
 >
   <div class="offcanvas-header">
-    <h5 id="itemCanvaLabel">Detalhes do Cliente</h5>
+    <h5 id="itemOffcanvasLabel">Detalhes do Cliente</h5>
     <button
       type="button"
       class="btn-close text-reset"
@@ -212,11 +212,11 @@
   </div>
 </div>
 <button
-  id="createTrigger"
+  id="criarTrigger"
   class="d-none"
   data-bs-toggle="offcanvas"
-  data-bs-target="#itemCanva"
-  data-create-url="{% url 'comercial:clientes_create' %}"
+  data-bs-target="#itemOffcanvas"
+  data-criar-url="{% url 'comercial:criar_cliente' %}"
 ></button>
 {% endblock content %} {% block extra_js %}
 <script defer
@@ -225,7 +225,7 @@
   crossorigin="anonymous"
 ></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script defer src="{% static 'js/datatable.js' %}"></script>
-<script defer src="{% static 'js/item_offcanva.js' %}"></script>
-<script defer src="{% static 'js/cpf_cnpj_mask.js' %}"></script>
+<script defer src="{% static 'js/dataTable.js' %}"></script>
+<script defer src="{% static 'js/itemOffCanvas.js' %}"></script>
+<script defer src="{% static 'js/cpfCnpjMask.js' %}"></script>
 {% endblock extra_js %}

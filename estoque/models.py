@@ -8,7 +8,7 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
-class ValorDiferente(models.Model):
+class TabelaPrecoCliente(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     cliente = models.ForeignKey('comercial.Cliente', on_delete=models.CASCADE)
     preco = models.DecimalField(max_digits=10, decimal_places=2)

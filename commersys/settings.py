@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'accounts',
     'core',
     'comercial',
-    'estoque_e_logistica',
+    'estoque',
     'anymail',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -106,7 +106,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
                     os.path.join(BASE_DIR, 'comercial/static'),
-                    os.path.join(BASE_DIR, 'estoque_e_logistica/static'),
+                    os.path.join(BASE_DIR, 'estoque/static'),
                     os.path.join(BASE_DIR, 'core/static'),
                     ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

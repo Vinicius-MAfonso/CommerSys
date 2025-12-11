@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('preco', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='comercial.cliente')),
-                ('produto', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estoque_e_logistica.produto')),
+                ('produto', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estoque.produto')),
             ],
         ),
     ]

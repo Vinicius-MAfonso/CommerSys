@@ -73,15 +73,15 @@
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
               aria-expanded="false" aria-controls="collapsePages">
               <div class="sb-nav-link-icon"><i class="fas fa-box"></i></div>
-              Estoque e Logística
+              Estoque
               <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
             </a>
             <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link {% if 'produtos' in request.resolver_match.view_name %}active{% endif %}"
-                  href="{% url 'estoque_e_logistica:produtos' %}">Produtos</a>
+                  href="{% url 'estoque:produtos' %}">Produtos</a>
                 <a class="nav-link {% if 'transportadoras' in request.resolver_match.view_name %}active{% endif %}"
-                  href="{% url 'estoque_e_logistica:transportadoras' %}">Transportadoras</a>
+                  href="{% url 'estoque:transportadoras' %}">Transportadoras</a>
               </nav>
             </div>
           </div>
@@ -137,7 +137,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
-  <script src="{% static 'js/nav_toggle.js' %}"></script>
+  <script src="{% static 'js/navToggle.js' %}"></script>
   <script src="{% static 'js/toast.js' %}"></script>
   {% block extra_js %}{% endblock %}
 </body>

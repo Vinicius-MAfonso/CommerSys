@@ -10,14 +10,14 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('comercial', '0001_initial'),
-        ('estoque_e_logistica', '0001_initial'),
+        ('estoque', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='itempedido',
             name='produto',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estoque_e_logistica.produto'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estoque.produto'),
         ),
         migrations.AddField(
             model_name='pedido',
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pedido',
             name='transportadora',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='estoque_e_logistica.transportadora'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='estoque.transportadora'),
         ),
         migrations.AddField(
             model_name='itempedido',

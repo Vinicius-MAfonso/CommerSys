@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const itemCanva = document.getElementById("itemCanva");
-  const editButton = itemCanva.querySelector("#editButton");
-  const generalActions = itemCanva.querySelector("#generalActions");
-  const editActions = itemCanva.querySelector("#editActions");
-  const saveButton = itemCanva.querySelector("#saveButton");
-  const cancelButton = itemCanva.querySelector("#cancelButton");
+  const itemOffcanvas = document.getElementById("itemOffcanvas");
+  const editButton = itemOffcanvas.querySelector("#editButton");
+  const generalActions = itemOffcanvas.querySelector("#generalActions");
+  const editActions = itemOffcanvas.querySelector("#editActions");
+  const saveButton = itemOffcanvas.querySelector("#saveButton");
+  const cancelButton = itemOffcanvas.querySelector("#cancelButton");
   const deleteForm = document.querySelector("#deleteForm");
-  const form = itemCanva.querySelector("form");
-  const formFields = itemCanva.querySelectorAll("input, textarea, select");
+  const form = itemOffcanvas.querySelector("form");
+  const formFields = itemOffcanvas.querySelectorAll("input, textarea, select");
 
   let activeRow = null;
 
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function fillFormData(rowData) {
-    const targets = itemCanva.querySelectorAll("[data-bind]");
+    const targets = itemOffcanvas.querySelectorAll("[data-bind]");
     targets.forEach((element) => {
       const bindKey = element.getAttribute("data-bind");
       let dataValue = rowData[bindKey];
@@ -52,10 +52,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-  itemCanva.addEventListener("show.bs.offcanvas", function (event) {
+  itemOffcanvas.addEventListener("show.bs.offcanvas", function (event) {
     const button = event.relatedTarget;
 
-    const isCreateMode = button.id === "createTrigger";
+    const isCreateMode = button.id === "criarTrigger";
 
     if (isCreateMode) {
       activeRow = null;
@@ -97,13 +97,13 @@ document.addEventListener("DOMContentLoaded", function () {
         fillFormData(activeRow.dataset);
         setEditMode(false);
       } else {
-        const bsOffcanvas = bootstrap.Offcanvas.getInstance(itemCanva);
+        const bsOffcanvas = bootstrap.Offcanvas.getInstance(itemOffcanvas);
         bsOffcanvas.hide();
       }
     });
   }
 
-  itemCanva.addEventListener("hidden.bs.offcanvas", function () {
+  itemOffcanvas.addEventListener("hidden.bs.offcanvas", function () {
     if (form) form.reset();
     setEditMode(false);
     activeRow = null;

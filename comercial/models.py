@@ -1,5 +1,5 @@
 from django.db import models
-from estoque_e_logistica.models import Transportadora, Produto
+from estoque.models import Transportadora, Produto
 
 class Cliente(models.Model):
     nome_razao_social = models.CharField(max_length=150)
@@ -24,7 +24,7 @@ class Pedido(models.Model):
     contato = models.ForeignKey(Contato, on_delete=models.SET_NULL, blank=True, null=True)
     transportadora = models.ForeignKey(Transportadora, on_delete=models.SET_NULL, blank=True, null=True)
     data_pedido = models.DateField(blank=True, null=True)
-    saida_pedido = models.DateField(blank=True, null=True)
+    data_saida = models.DateField(blank=True, null=True)
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     valor_frete = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     pagador_frete = models.CharField(max_length=10, blank=True, null=True)

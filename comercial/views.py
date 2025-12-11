@@ -5,7 +5,7 @@ from .models import Cliente, Produto
 def clientes(request):
     clientes = Cliente.objects.all()
     return render(request, 'clientes/clientes.html', {'clientes': clientes})
-def clientes_create(request):
+def criar_cliente(request):
     try:
         nome_razao_social = request.POST.get('nome_razao_social')
         cpf_cnpj = request.POST.get('cpf_cnpj')
@@ -13,35 +13,58 @@ def clientes_create(request):
         endereco = request.POST.get('endereco')
         inscricao_estadual = request.POST.get('inscricao_estadual')
         Cliente.objects.create(nome_razao_social=nome_razao_social, cpf_cnpj=cpf_cnpj, telefone_principal=telefone_principal, endereco=endereco, inscricao_estadual=inscricao_estadual)
-    except Exception as e:
-        messages.error(request, f"Erro ao criar cliente: {e}")
+    except Exception:
+        messages.error(request, f"Erro ao criar cliente!")
         return redirect('comercial:clientes')
-    messages.success(request, "Cliente criado com sucesso.")
+    messages.success(request, "Cliente criado com sucesso!")
     return redirect('comercial:clientes')
 
-def clientes_update(request, pk):
-    pass
-    # return render(request, 'comercial/cliente_form.html')
+def editar_cliente(request, pk):
+    try:
+        cliente = Cliente.objects.get(pk=pk)
+        cliente.nome_razao_social = request.POST.get('nome_razao_social')
+        cliente.cpf_cnpj = request.POST.get('cpf_cnpj')
+        cliente.telefone_principal = request.POST.get('telefone_principal')
+        cliente.endereco = request.POST.get('endereco')
+        cliente.inscricao_estadual = request.POST.get('inscricao_estadual')
+        cliente.save()
+    except Cliente.DoesNotExist:
+        messages.error(request, 'Cliente não encontrado!')
+        return redirect('comercial:clientes')
+    except Exception:
+        messages.error(request, f'Erro ao atualizar o cliente!')
+        return redirect('comercial:clientes')
+    messages.success(request, 'Cliente atualizado com sucesso!')
+    return redirect('comercial:clientes')
 
-def clientes_delete(request, pk):
-    pass
-    # return render(request, 'comercial/cliente_confirm_delete.html')
+def deletar_cliente(request, pk):
+    try:
+        cliente = Cliente.objects.get(pk=pk)
+        cliente.delete()
+    except Cliente.DoesNotExist:
+        messages.error(request, 'Cliente não encontrado!')
+        return redirect('comercial:clientes')
+    except Exception:
+        messages.error(request, f'Erro ao deletar o cliente!')
+        return redirect('comercial:clientes')
+    messages.success(request, 'Cliente deletado com sucesso!')
+    return redirect('comercial:clientes')
 
 
 def contatos(request):
     pass
-def contatos_create(request):
+def contato_criar(request):
     pass
-def contatos_update(request, pk):
+def contato_update(request, pk):
     pass
-def contatos_delete(request, pk):
+def contato_delete(request, pk):
     pass
 
 def pedidos(request):
     pass
-def pedidos_create(request):
+def pedido_criar(request):
     pass
-def pedidos_update(request, pk):
+def pedido_update(request, pk):
     pass
-def pedidos_delete(request, pk):
+def pedido_delete(request, pk):
     pass
