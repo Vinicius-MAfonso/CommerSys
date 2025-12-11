@@ -33,9 +33,8 @@ ALLOWED_HOSTS = ALLOWED_HOSTS_STR.split(',') if ALLOWED_HOSTS_STR else []
 INSTALLED_APPS = [
     'accounts',
     'core',
-    'clientes',
-    'produtos',
-    'pedidos',
+    'comercial',
+    'estoque_e_logistica',
     'anymail',
     'django.contrib.admin',
     'django.contrib.auth',
