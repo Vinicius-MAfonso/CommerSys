@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %} {% load static %} 
-{% block title%}Produtos{%endblock title %} {% block extra_css %}
+{% block title%}Clientes{%endblock title %} {% block extra_css %}
 <link
   href="https://cdn.datatables.net/v/bs5/jq-3.7.0/dt-2.3.5/b-3.2.5/b-html5-3.2.5/r-3.0.7/sc-2.4.3/sp-2.3.5/sl-3.1.3/datatables.min.css"
   rel="stylesheet"
@@ -7,48 +7,50 @@
   crossorigin="anonymous"
 />
 {% endblock extra_css %} {% block content %}
-<h1 class="mt-4">Produtos</h1>
+<h1 class="mt-4">Clientes</h1>
 <ol class="breadcrumb mb-4">
   <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
-  <li class="breadcrumb-item active">Produtos</li>
+  <li class="breadcrumb-item">Comercial</li>
+  <li class="breadcrumb-item active">Clientes</li>
 </ol>
 <div class="card mb-4">
   <div class="card-header">
     <i class="fas fa-table me-1"></i>
-    Tabela de Produtos
+    Tabela de Clientes
   </div>
   <div class="card-body">
     <div class="table-responsive">
       <table id="table" class="table datatable-table text-nowrap">
         <thead>
           <tr>
-            <th>Produto</th>
-            <th>Descrição</th>
-            <th>Preço</th>
+            <th>Cliente</th>
+            <th>CPF/CNPJ</th>
+            <th>Telefone Principal</th>
+            <th>Endereço</th>
+            <th>Inscrição Estadual</th>
           </tr>
         </thead>
         <tbody>
-          {% for produto in produtos %}
+          {% for cliente in clientes %}
           <tr
-            data-id="{{ produto.id }}"
-            data-nome="{{ produto.nome }}"
-            data-descricao="{{ produto.descricao }}"
-            data-preco="{{ produto.preco|default_if_none:'' }}"
-            data-update-url="{% url 'produtos:produto_update' pk=produto.id %}"
-            data-delete-url="{% url 'produtos:produto_delete' pk=produto.id %}"
+            data-id="{{ cliente.id }}"
+            data-nome="{{ cliente.nome }}"
+            data-cpf_cnpj="{{ cliente.cpf_cnpj }}"
+            data-telefone="{{ cliente.telefone }}"
+            data-endereco="{{ cliente.endereco }}"
+            data-inscricao_estadual="{{ cliente.inscricao_estadual }}"
+            data-update-url="{% url 'comercial:clientes_update' pk=cliente.id %}"
+            data-delete-url="{% url 'comercial:clientes_delete' pk=cliente.id %}"
             pointer=""
             data-bs-toggle="offcanvas"
             data-bs-target="#itemCanva"
             aria-controls="itemCanva"
           >
-            <td>{{ produto.nome }}</td>
-            <td>{{ produto.descricao }}</td>
-
-            {% if produto.preco %}
-            <td>R$ {{ produto.preco|floatformat:2 }}</td>
-            {% else %}
-            <td>Não Inserido</td>
-            {% endif %}
+            <td>{{ cliente.nome }}</td>
+            <td>{{ cliente.cpf_cnpj }}</td>
+            <td>{{ cliente.telefone }}</td>
+            <td>{{ cliente.endereco }}</td>
+            <td>{{ cliente.inscricao_estadual }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -105,7 +107,7 @@
   aria-labelledby="itemCanvaLabel"
 >
   <div class="offcanvas-header">
-    <h5 id="itemCanvaLabel">Detalhes do Produto</h5>
+    <h5 id="itemCanvaLabel">Detalhes do Cliente</h5>
     <button
       type="button"
       class="btn-close text-reset"
@@ -117,7 +119,7 @@
     <form method="post" action="#" id="itemForm">
       {% csrf_token %}
       <div class="mb-3">
-        <label for="nome" class="form-label">Nome do Produto</label>
+        <label for="nome" class="form-label">Nome do Cliente</label>
         <input
           type="text"
           class="form-control"
@@ -127,28 +129,50 @@
           required
           disabled
         />
-      </div>
       <div class="mb-3">
-        <label for="descricao" class="form-label">Descrição</label>
-        <textarea
-          class="form-control"
-          id="descricao"
-          name="descricao"
-          rows="3"
-          data-bind="descricao"
-          disabled
-        ></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="preco" class="form-label">Preço</label>
+        <label for="cpf_cnpj" class="form-label">CPF/CNPJ</label>
         <input
-          min="0"
-          type="number"
-          step="0.01"
+          type="text"
           class="form-control"
-          id="preco"
-          name="preco"
-          data-bind="preco"
+          id="cpf_cnpj"
+          name="cpf_cnpj"
+          data-bind="cpf_cnpj"
+          required
+          disabled
+        />
+      <div class="mb-3">
+        <label for="telefone" class="form-label">Telefone</label>
+        <input
+          type="text"
+          class="form-control"
+          id="telefone"
+          name="telefone"
+          data-bind="telefone"
+          required
+          disabled
+        />
+      </div>
+      <div class="mb-3">
+        <label for="endereco" class="form-label">Endereço</label>
+        <input
+          type="text"
+          class="form-control"
+          id="endereco"
+          name="endereco"
+          data-bind="endereco"
+          required
+          disabled
+        />
+      </div>
+      <div class="mb-3">
+        <label for="inscricao_estadual" class="form-label">Inscrição Estadual</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inscricao_estadual"
+          name="inscricao_estadual"
+          data-bind="inscricao_estadual"
+          required
           disabled
         />
       </div>
@@ -192,7 +216,7 @@
   class="d-none"
   data-bs-toggle="offcanvas"
   data-bs-target="#itemCanva"
-  data-create-url="{% url 'produtos:produto_create' %}"
+  data-create-url="{% url 'comercial:clientes_create' %}"
 ></button>
 {% endblock content %} {% block extra_js %}
 <script defer
@@ -200,6 +224,8 @@
   integrity="sha384-dtFR4AuNqbJGpuDh7hnaQ8bDHmyvidzFtu95cqBqQiM/1orz0TCpFduoJRK8aAwy"
   crossorigin="anonymous"
 ></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script defer src="{% static 'js/datatable.js' %}"></script>
 <script defer src="{% static 'js/item_offcanva.js' %}"></script>
+<script defer src="{% static 'js/cpf_cnpj_mask.js' %}"></script>
 {% endblock extra_js %}

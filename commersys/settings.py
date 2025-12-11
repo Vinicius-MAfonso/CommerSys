@@ -104,11 +104,9 @@ TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),
-                    os.path.join(BASE_DIR, 'clientes/static'),
-                    os.path.join(BASE_DIR, 'produtos/static'),
-                    os.path.join(BASE_DIR, 'pedidos/static'),
-                    os.path.join(BASE_DIR, 'accounts/static'),
+STATICFILES_DIRS = [
+                    os.path.join(BASE_DIR, 'comercial/static'),
+                    os.path.join(BASE_DIR, 'estoque_e_logistica/static'),
                     os.path.join(BASE_DIR, 'core/static'),
                     ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

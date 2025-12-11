@@ -63,11 +63,11 @@
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link {% if 'clientes' in request.resolver_match.view_name %}active{% endif %}"
-                  href="#">Clientes</a>
+                  href="{% url 'comercial:clientes' %}">Clientes</a>
                 <a class="nav-link {% if 'contatos' in request.resolver_match.view_name %}active{% endif %}"
-                  href="#">Contatos</a>
+                  href="{% url 'comercial:contatos' %}">Contatos</a>
                 <a class="nav-link {% if 'pedidos' in request.resolver_match.view_name %}active{% endif %}"
-                  href="#">Pedidos</a>
+                  href="{% url 'comercial:pedidos' %}">Pedidos</a>
               </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
@@ -79,9 +79,9 @@
             <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link {% if 'produtos' in request.resolver_match.view_name %}active{% endif %}"
-                  href="#">Produtos</a>
+                  href="{% url 'estoque_e_logistica:produtos' %}">Produtos</a>
                 <a class="nav-link {% if 'transportadoras' in request.resolver_match.view_name %}active{% endif %}"
-                  href="#">Transportadoras</a>
+                  href="{% url 'estoque_e_logistica:transportadoras' %}">Transportadoras</a>
               </nav>
             </div>
           </div>
