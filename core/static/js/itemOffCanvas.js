@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const itemOffcanvas = document.getElementById("itemOffcanvas");
-  const editButton = itemOffcanvas.querySelector("#editButton");
-  const generalActions = itemOffcanvas.querySelector("#generalActions");
-  const editActions = itemOffcanvas.querySelector("#editActions");
-  const saveButton = itemOffcanvas.querySelector("#saveButton");
-  const cancelButton = itemOffcanvas.querySelector("#cancelButton");
+  const itemOffCanvas = document.getElementById("itemOffCanvas");
+  const editButton = itemOffCanvas.querySelector("#editButton");
+  const generalActions = itemOffCanvas.querySelector("#generalActions");
+  const editActions = itemOffCanvas.querySelector("#editActions");
+  const saveButton = itemOffCanvas.querySelector("#saveButton");
+  const cancelButton = itemOffCanvas.querySelector("#cancelButton");
   const deleteForm = document.querySelector("#deleteForm");
-  const form = itemOffcanvas.querySelector("form");
-  const formFields = itemOffcanvas.querySelectorAll("input, textarea, select");
+  const form = itemOffCanvas.querySelector("form");
+  const formFields = itemOffCanvas.querySelectorAll("input, textarea, select");
 
   let activeRow = null;
 
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function fillFormData(rowData) {
-    const targets = itemOffcanvas.querySelectorAll("[data-bind]");
+    const targets = itemOffCanvas.querySelectorAll("[data-bind]");
     targets.forEach((element) => {
       const bindKey = element.getAttribute("data-bind");
       let dataValue = rowData[bindKey];
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-  itemOffcanvas.addEventListener("show.bs.offcanvas", function (event) {
+  itemOffCanvas.addEventListener("show.bs.offcanvas", function (event) {
     const button = event.relatedTarget;
 
     const isCreateMode = button.id === "criarTrigger";
@@ -97,13 +97,13 @@ document.addEventListener("DOMContentLoaded", function () {
         fillFormData(activeRow.dataset);
         setEditMode(false);
       } else {
-        const bsOffcanvas = bootstrap.Offcanvas.getInstance(itemOffcanvas);
-        bsOffcanvas.hide();
+        const bsOffCanvas = bootstrap.Offcanvas.getInstance(itemOffCanvas);
+        bsOffCanvas.hide();
       }
     });
   }
 
-  itemOffcanvas.addEventListener("hidden.bs.offcanvas", function () {
+  itemOffCanvas.addEventListener("hidden.bs.offcanvas", function () {
     if (form) form.reset();
     setEditMode(false);
     activeRow = null;

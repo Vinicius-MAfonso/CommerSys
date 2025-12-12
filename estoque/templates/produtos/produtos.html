@@ -39,8 +39,8 @@
             data-delete-url="{% url 'estoque:produto_delete' pk=produto.id %}"
             pointer=""
             data-bs-toggle="offcanvas"
-            data-bs-target="#itemCanvas"
-            aria-controls="itemCanvas"
+            data-bs-target="#itemOffCanvas"
+            aria-controls="itemOffCanvas"
           >
             <td>{{ produto.nome }}</td>
             <td>{{ produto.descricao }}</td>
@@ -102,11 +102,11 @@
 <div
   class="offcanvas offcanvas-end"
   tabindex="-1"
-  id="itemCanvas"
-  aria-labelledby="itemCanvasLabel"
+  id="itemOffCanvas"
+  aria-labelledby="itemOffCanvasLabel"
 >
   <div class="offcanvas-header">
-    <h5 id="itemCanvasLabel">Detalhes do Produto</h5>
+    <h5 id="itemOffCanvasLabel">Detalhes do Produto</h5>
     <button
       type="button"
       class="btn-close text-reset"
@@ -192,7 +192,7 @@
   id="criarTrigger"
   class="d-none"
   data-bs-toggle="offcanvas"
-  data-bs-target="#itemCanvas"
+  data-bs-target="#itemOffCanvas"
   data-create-url="{% url 'estoque:produto_create' %}"
 ></button>
 {% endblock content %} {% block extra_js %}
@@ -201,6 +201,6 @@
   integrity="sha384-dtFR4AuNqbJGpuDh7hnaQ8bDHmyvidzFtu95cqBqQiM/1orz0TCpFduoJRK8aAwy"
   crossorigin="anonymous"
 ></script>
-<script defer src="{% static 'js/datatable.js' %}"></script>
-<script defer src="{% static 'js/item_offcanvas.js' %}"></script>
+<script defer src="{% static 'js/dataTable.js' %}"></script>
+<script defer src="{% static 'js/itemOffCanvas.js' %}"></script>
 {% endblock extra_js %}

@@ -63,11 +63,11 @@
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link {% if 'clientes' in request.resolver_match.view_name %}active{% endif %}"
-                  href="{% url 'comercial:clientes' %}">Clientes</a>
+                  href="#">Clientes</a>
                 <a class="nav-link {% if 'contatos' in request.resolver_match.view_name %}active{% endif %}"
-                  href="{% url 'comercial:contatos' %}">Contatos</a>
+                  href="#">Contatos</a>
                 <a class="nav-link {% if 'pedidos' in request.resolver_match.view_name %}active{% endif %}"
-                  href="{% url 'comercial:pedidos' %}">Pedidos</a>
+                  href="#">Pedidos</a>
               </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
