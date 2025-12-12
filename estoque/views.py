@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from .models import Produto, Transportadora
 
 
@@ -17,24 +17,19 @@ def produto_detail(request, pk):
     if request.method == "GET":
         try:
             produto = Produto.objects.get(pk=pk)
-            json = {
+            data = {
                 "id": produto.id,
                 "nome": produto.nome,
                 "descricao": produto.descricao,
                 "preco": produto.preco,
             }
-            return HttpResponse(json, content_type="application/json")
+            return JsonResponse(data)
         except Produto.DoesNotExist:
-            return Http404("Produto não encontrado.", content_type="text/plain")
-        except Exception:
-            return HttpResponse(
-                "Erro ao carregar o produto.", status=500, content_type="text/plain"
-            )
+            return JsonResponse({"error": "Produto não encontrado."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
     else:
-        return HttpResponse(
-            "Método não permitido.", status=405, content_type="text/plain"
-        )
-
+        return JsonResponse({"error": "Método não permitido."}, status=405)
 
 def produto_create(request):
     try:
@@ -96,21 +91,17 @@ def transportadora_detail(request, pk):
     if request.method == "GET":
         try:
             transportadora = Transportadora.objects.get(pk=pk)
-            json = {
+            data = {
                 "id": transportadora.id,
                 "nome": transportadora.nome,
             }
-            return HttpResponse(json, content_type="application/json")
+            return JsonResponse(data)
         except Transportadora.DoesNotExist:
-            return Http404("Transportadora não encontrada.", content_type="text/plain")
-        except Exception:
-            return HttpResponse(
-                "Erro ao carregar a transportadora.", status=500, content_type="text/plain"
-            )
+            return JsonResponse({"error": "Transportadora não encontrada."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
     else:
-        return HttpResponse(
-            "Método não permitido.", status=405, content_type="text/plain"
-        )
+        return JsonResponse({"error": "Método não permitido."}, status=405)
 
 def transportadora_create(request):
     try:

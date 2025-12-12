@@ -53,37 +53,55 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
   itemOffCanvas.addEventListener("show.bs.offcanvas", function (event) {
-    const button = event.relatedTarget;
+      const button = event.relatedTarget;
+      const isCreateMode = button.id === "createTrigger";
 
-    const isCreateMode = button.id === "criarTrigger";
+      if (isCreateMode) {
+        activeRow = null;
+        if (form) form.reset();
+        if (form && button.dataset.createUrl) {
+          form.action = button.dataset.createUrl;
+        }
+        setEditMode(true);
+      } else {
+        // Edit/View Mode
+        activeRow = button.closest("tr");
+        const rowData = activeRow.dataset;
 
-    if (isCreateMode) {
-      activeRow = null;
+        // Set form actions
+        if (form && rowData.updateUrl) form.action = rowData.updateUrl;
+        if (deleteForm && rowData.deleteUrl) deleteForm.action = rowData.deleteUrl;
 
-      if (form) form.reset();
+        // Check if we have an AJAX URL for details
+        if (rowData.detailUrl) {
+          // 1. Visual Loading State (Optional: dim the form)
+          form.style.opacity = "0.5";
+          
+          // 2. Fetch Data
+          fetch(rowData.detailUrl)
+            .then((response) => {
+              if (!response.ok) throw new Error("Network response was not ok");
+              return response.json();
+            })
+            .then((data) => {
+              // 3. Fill form with fresh data from server
+              fillFormData(data);
+              form.style.opacity = "1";
+            })
+            .catch((error) => {
+              console.error("Error fetching details:", error);
+              form.style.opacity = "1";
+              // Fallback to data attributes if fetch fails
+              fillFormData(rowData);
+            });
+        } else {
+          // Fallback: Use existing data attributes if no URL provided
+          fillFormData(rowData);
+        }
 
-      if (form && button.dataset.createUrl) {
-        form.action = button.dataset.createUrl;
+        setEditMode(false);
       }
-
-      setEditMode(true);
-    } else {
-      activeRow = button.closest("tr");
-      const rowData = activeRow.dataset;
-
-      if (form && rowData.updateUrl) {
-        form.action = rowData.updateUrl;
-      }
-
-      if (deleteForm && rowData.deleteUrl) {
-        deleteForm.action = rowData.deleteUrl;
-      }
-
-      fillFormData(rowData);
-
-      setEditMode(false);
-    }
-  });
+    });
 
   if (editButton) {
     editButton.addEventListener("click", function () {

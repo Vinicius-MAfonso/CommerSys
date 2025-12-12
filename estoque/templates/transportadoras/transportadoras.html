@@ -31,6 +31,7 @@
           <tr
             data-id="{{ transportadora.id }}"
             data-nome="{{ transportadora.nome }}"
+            data-detail-url="{% url 'estoque:transportadora_detail' pk=transportadora.id %}"
             data-update-url="{% url 'estoque:transportadora_update' pk=transportadora.id %}"
             data-delete-url="{% url 'estoque:transportadora_delete' pk=transportadora.id %}"
             pointer=""
@@ -154,7 +155,7 @@
   </div>
 </div>
 <button
-  id="criarTrigger"
+  id="createTrigger"
   class="d-none"
   data-bs-toggle="offcanvas"
   data-bs-target="#itemOffCanvas"

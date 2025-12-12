@@ -7,7 +7,7 @@ const dataTable = $("#table").DataTable({
           text: '<i class="fas fa-plus"></i> Novo',
           className: 'btn btn-success', 
           action: function (e, dt, node, config) {
-            document.getElementById('criarTrigger').click();
+            document.getElementById('createTrigger').click();
           }
         }
       ]

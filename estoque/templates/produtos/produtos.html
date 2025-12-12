@@ -33,8 +33,7 @@
           <tr
             data-id="{{ produto.id }}"
             data-nome="{{ produto.nome }}"
-            data-descricao="{{ produto.descricao }}"
-            data-preco="{{ produto.preco|default_if_none:'' }}"
+            data-detail-url="{% url 'estoque:produto_detail' pk=produto.id %}"
             data-update-url="{% url 'estoque:produto_update' pk=produto.id %}"
             data-delete-url="{% url 'estoque:produto_delete' pk=produto.id %}"
             pointer=""
@@ -189,7 +188,7 @@
   </div>
 </div>
 <button
-  id="criarTrigger"
+  id="createTrigger"
   class="d-none"
   data-bs-toggle="offcanvas"
   data-bs-target="#itemOffCanvas"
