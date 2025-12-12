@@ -5,14 +5,13 @@ app_name = 'estoque'
 
 urlpatterns = [
     path('produtos/', views.produtos, name='produtos'),
-    path('produtos/criar/', views.criar_produto, name='criar_produto'),
-    path('produtos/<int:pk>/detail/', views.detalhes_produto, name='detalhes_produto'),
-    path('produtos/<int:pk>/update/', views.editar_produto, name='editar_produto'),
-    path('produtos/<int:pk>/delete/', views.deletar_produto, name='deletar_produto'),
-
+    path("produtos/detail/<int:pk>/", views.produto_detail, name="produto_detail"),
+    path('produtos/create/', views.produto_create, name='produto_create'),
+    path('produtos/update/<int:pk>/', views.produto_update, name='produto_update'),
+    path('produtos/delete/<int:pk>/', views.produto_delete, name='produto_delete'),
     path('transportadoras/', views.transportadoras, name='transportadoras'),
-    path('transportadoras/criar/', views.criar_transportadora, name='criar_transportadora'),
-    path('transportadoras/<int:pk>/detail/', views.detalhes_transportadora, name='detalhes_transportadora'),
-    path('transportadoras/<int:pk>/update/', views.editar_transportadora, name='editar_transportadora'),
-    path('transportadoras/<int:pk>/delete/', views.deletar_transportadora, name='deletar_transportadora'),
+    path('transportadoras/detail/<int:pk>/', views.transportadora_detail, name='transportadora_detail'),
+    path('transportadoras/create/', views.transportadora_create, name='transportadora_create'),
+    path('transportadoras/update/<int:pk>/', views.transportadora_update, name='transportadora_update'),
+    path('transportadoras/delete/<int:pk>/', views.transportadora_delete, name='transportadora_delete'),
 ]

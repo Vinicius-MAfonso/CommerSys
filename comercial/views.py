@@ -15,40 +15,18 @@ def criar_cliente(request):
         Cliente.objects.create(nome_razao_social=nome_razao_social, cpf_cnpj=cpf_cnpj, telefone_principal=telefone_principal, endereco=endereco, inscricao_estadual=inscricao_estadual)
     except Exception:
         messages.error(request, f"Erro ao criar cliente!")
+    except Exception:
+        messages.error(request, f"Erro ao criar cliente!")
         return redirect('comercial:clientes')
+    messages.success(request, "Cliente criado com sucesso!")
     messages.success(request, "Cliente criado com sucesso!")
     return redirect('comercial:clientes')
 
-def editar_cliente(request, pk):
-    try:
-        cliente = Cliente.objects.get(pk=pk)
-        cliente.nome_razao_social = request.POST.get('nome_razao_social')
-        cliente.cpf_cnpj = request.POST.get('cpf_cnpj')
-        cliente.telefone_principal = request.POST.get('telefone_principal')
-        cliente.endereco = request.POST.get('endereco')
-        cliente.inscricao_estadual = request.POST.get('inscricao_estadual')
-        cliente.save()
-    except Cliente.DoesNotExist:
-        messages.error(request, 'Cliente não encontrado!')
-        return redirect('comercial:clientes')
-    except Exception:
-        messages.error(request, f'Erro ao atualizar o cliente!')
-        return redirect('comercial:clientes')
-    messages.success(request, 'Cliente atualizado com sucesso!')
-    return redirect('comercial:clientes')
+def clientes_update(request, pk):
+    pass
 
-def deletar_cliente(request, pk):
-    try:
-        cliente = Cliente.objects.get(pk=pk)
-        cliente.delete()
-    except Cliente.DoesNotExist:
-        messages.error(request, 'Cliente não encontrado!')
-        return redirect('comercial:clientes')
-    except Exception:
-        messages.error(request, f'Erro ao deletar o cliente!')
-        return redirect('comercial:clientes')
-    messages.success(request, 'Cliente deletado com sucesso!')
-    return redirect('comercial:clientes')
+def clientes_delete(request, pk):
+    pass
 
 
 def contatos(request):

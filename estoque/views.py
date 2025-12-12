@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.http import HttpResponse, Http404
 from .models import Produto, Transportadora
 
 
@@ -12,19 +13,30 @@ def produtos(request):
     return render(request, "produtos/produtos.html", {"produtos": produtos})
 
 
-def detalhes_produto(request, pk):
-    try:
-        produto = Produto.objects.get(pk=pk)
-    except Produto.DoesNotExist:
-        messages.error(request, "Produto não encontrado!")
-        return redirect("estoque:produtos")
-    except Exception:
-        messages.error(request, f"Erro ao carregar o produto!")
-        return redirect("estoque:produtos")
-    return render(request, "produtos/detalhes_produto.html", {"produto": produto})
+def produto_detail(request, pk):
+    if request.method == "GET":
+        try:
+            produto = Produto.objects.get(pk=pk)
+            json = {
+                "id": produto.id,
+                "nome": produto.nome,
+                "descricao": produto.descricao,
+                "preco": produto.preco,
+            }
+            return HttpResponse(json, content_type="application/json")
+        except Produto.DoesNotExist:
+            return Http404("Produto não encontrado.", content_type="text/plain")
+        except Exception:
+            return HttpResponse(
+                "Erro ao carregar o produto.", status=500, content_type="text/plain"
+            )
+    else:
+        return HttpResponse(
+            "Método não permitido.", status=405, content_type="text/plain"
+        )
 
 
-def criar_produto(request):
+def produto_create(request):
     try:
         nome = request.POST.get("nome")
         descricao = request.POST.get("descricao")
@@ -37,7 +49,7 @@ def criar_produto(request):
     return redirect("estoque:produtos")
 
 
-def editar_produto(request, pk):
+def produto_update(request, pk):
     try:
         produto = Produto.objects.get(pk=pk)
         produto.nome = request.POST.get("nome")
@@ -45,7 +57,7 @@ def editar_produto(request, pk):
         produto.preco = request.POST.get("preco") or None
         produto.save()
     except Produto.DoesNotExist:
-        messages.error(request, "Produto não encontrado!")
+        messages.error(request, "Produto não encontrado.")
         return redirect("estoque:produtos")
     except Exception:
         messages.error(request, f"Erro ao atualizar o produto!")
@@ -54,12 +66,12 @@ def editar_produto(request, pk):
     return redirect("estoque:produtos")
 
 
-def deletar_produto(request, pk):
+def produto_delete(request, pk):
     try:
         produto = Produto.objects.get(pk=pk)
         produto.delete()
     except Produto.DoesNotExist:
-        messages.error(request, "Produto não encontrado!")
+        messages.error(request, "Produto não encontrado.")
         return redirect("estoque:produtos")
     except Exception:
         messages.error(request, f"Erro ao deletar o produto!")
@@ -80,24 +92,27 @@ def transportadoras(request):
         {"transportadoras": transportadoras},
     )
 
+def transportadora_detail(request, pk):
+    if request.method == "GET":
+        try:
+            transportadora = Transportadora.objects.get(pk=pk)
+            json = {
+                "id": transportadora.id,
+                "nome": transportadora.nome,
+            }
+            return HttpResponse(json, content_type="application/json")
+        except Transportadora.DoesNotExist:
+            return Http404("Transportadora não encontrada.", content_type="text/plain")
+        except Exception:
+            return HttpResponse(
+                "Erro ao carregar a transportadora.", status=500, content_type="text/plain"
+            )
+    else:
+        return HttpResponse(
+            "Método não permitido.", status=405, content_type="text/plain"
+        )
 
-def detalhes_transportadora(request, pk):
-    try:
-        transportadora = Transportadora.objects.get(pk=pk)
-    except Transportadora.DoesNotExist:
-        messages.error(request, "Transportadora não encontrada!")
-        return redirect("estoque:transportadoras")
-    except Exception:
-        messages.error(request, f"Erro ao carregar a transportadora!")
-        return redirect("estoque:transportadoras")
-    return render(
-        request,
-        "transportadoras/detalhes_transportadora.html",
-        {"transportadora": transportadora},
-    )
-
-
-def criar_transportadora(request):
+def transportadora_create(request):
     try:
         nome = request.POST.get("nome")
         Transportadora.objects.create(nome=nome)
@@ -108,13 +123,13 @@ def criar_transportadora(request):
     return redirect("estoque:transportadoras")
 
 
-def editar_transportadora(request, pk):
+def transportadora_update(request, pk):
     try:
         transportadora = Transportadora.objects.get(pk=pk)
         transportadora.nome = request.POST.get("nome")
         transportadora.save()
     except Transportadora.DoesNotExist:
-        messages.error(request, "Transportadora não encontrada!")
+        messages.error(request, "Transportadora não encontrada.")
         return redirect("estoque:transportadoras")
     except Exception:
         messages.error(request, f"Erro ao atualizar a transportadora!")
@@ -123,7 +138,7 @@ def editar_transportadora(request, pk):
     return redirect("estoque:transportadoras")
 
 
-def deletar_transportadora(request, pk):
+def transportadora_delete(request, pk):
     try:
         transportadora = Transportadora.objects.get(pk=pk)
         transportadora.delete()

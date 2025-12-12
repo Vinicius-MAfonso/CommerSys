@@ -22,10 +22,8 @@ ENVIRONMENT = os.getenv('ENVIRONMENT', 'local')
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# O padrão é 'False' por segurança
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# Carrega do .env e divide a string por vírgulas
 ALLOWED_HOSTS_STR = os.getenv('ALLOWED_HOSTS')
 ALLOWED_HOSTS = ALLOWED_HOSTS_STR.split(',') if ALLOWED_HOSTS_STR else []
 
@@ -129,5 +127,5 @@ try:
         messages.WARNING: 'bg-warning text-dark',
         messages.ERROR: 'bg-danger',
     }
-except Exception as e:
+except Exception:
     pass

@@ -31,12 +31,21 @@
           <tr
             data-id="{{ transportadora.id }}"
             data-nome="{{ transportadora.nome }}"
+<<<<<<< HEAD
             data-update-url="{% url 'estoque:editar_transportadora' pk=transportadora.id %}"
             data-delete-url="{% url 'estoque:deletar_transportadora' pk=transportadora.id %}"
             pointer=""
             data-bs-toggle="offcanvas"
             data-bs-target="#itemOffcanvas"
             aria-controls="itemOffcanvas"
+=======
+            data-update-url="{% url 'estoque:transportadora_update' pk=transportadora.id %}"
+            data-delete-url="{% url 'estoque:transportadora_delete' pk=transportadora.id %}"
+            pointer=""
+            data-bs-toggle="offcanvas"
+            data-bs-target="#itemCanvas"
+            aria-controls="itemCanvas"
+>>>>>>> d6530ce (Next step: ajax calls to update canvas modal)
           >
             <td>{{ transportadora.nome }}</td>
           </tr>
@@ -91,11 +100,19 @@
 <div
   class="offcanvas offcanvas-end"
   tabindex="-1"
+<<<<<<< HEAD
   id="itemOffcanvas"
   aria-labelledby="itemOffcanvasLabel"
 >
   <div class="offcanvas-header">
     <h5 id="itemOffcanvasLabel">Detalhes da Transportadora</h5>
+=======
+  id="itemCanvas"
+  aria-labelledby="itemCanvasLabel"
+>
+  <div class="offcanvas-header">
+    <h5 id="itemCanvasLabel">Detalhes da Transportadora</h5>
+>>>>>>> d6530ce (Next step: ajax calls to update canvas modal)
     <button
       type="button"
       class="btn-close text-reset"
@@ -157,8 +174,13 @@
   id="criarTrigger"
   class="d-none"
   data-bs-toggle="offcanvas"
+<<<<<<< HEAD
   data-bs-target="#itemOffcanvas"
   data-criar-url="{% url 'estoque:criar_transportadora' %}"
+=======
+  data-bs-target="#itemCanva"
+  data-create-url="{% url 'estoque:transportadora_create' %}"
+>>>>>>> d6530ce (Next step: ajax calls to update canvas modal)
 ></button>
 {% endblock content %} {% block extra_js %}
 <script defer
@@ -166,6 +188,11 @@
   integrity="sha384-dtFR4AuNqbJGpuDh7hnaQ8bDHmyvidzFtu95cqBqQiM/1orz0TCpFduoJRK8aAwy"
   crossorigin="anonymous"
 ></script>
+<<<<<<< HEAD
 <script defer src="{% static 'js/dataTable.js' %}"></script>
 <script defer src="{% static 'js/itemOffCanvas.js' %}"></script>
+=======
+<script defer src="{% static 'js/datatable.js' %}"></script>
+<script defer src="{% static 'js/item_offcanvas.js' %}"></script>
+>>>>>>> d6530ce (Next step: ajax calls to update canvas modal)
 {% endblock extra_js %}
