@@ -64,38 +64,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         setEditMode(true);
       } else {
-        // Edit/View Mode
         activeRow = button.closest("tr");
         const rowData = activeRow.dataset;
 
-        // Set form actions
         if (form && rowData.updateUrl) form.action = rowData.updateUrl;
         if (deleteForm && rowData.deleteUrl) deleteForm.action = rowData.deleteUrl;
 
-        // Check if we have an AJAX URL for details
         if (rowData.detailUrl) {
-          // 1. Visual Loading State (Optional: dim the form)
           form.style.opacity = "0.5";
           
-          // 2. Fetch Data
           fetch(rowData.detailUrl)
             .then((response) => {
               if (!response.ok) throw new Error("Network response was not ok");
               return response.json();
             })
             .then((data) => {
-              // 3. Fill form with fresh data from server
               fillFormData(data);
               form.style.opacity = "1";
             })
             .catch((error) => {
               console.error("Error fetching details:", error);
               form.style.opacity = "1";
-              // Fallback to data attributes if fetch fails
               fillFormData(rowData);
             });
         } else {
-          // Fallback: Use existing data attributes if no URL provided
           fillFormData(rowData);
         }
 

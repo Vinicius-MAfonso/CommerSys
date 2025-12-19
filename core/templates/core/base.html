@@ -63,7 +63,7 @@
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
               <nav class="sb-sidenav-menu-nested nav">
                 <a class="nav-link {% if 'clientes' in request.resolver_match.view_name %}active{% endif %}"
-                  href="#">Clientes</a>
+                  href="{% url 'comercial:clientes' %}">Clientes</a>
                 <a class="nav-link {% if 'contatos' in request.resolver_match.view_name %}active{% endif %}"
                   href="#">Contatos</a>
                 <a class="nav-link {% if 'pedidos' in request.resolver_match.view_name %}active{% endif %}"
@@ -134,11 +134,11 @@
     {% endfor %}
     {% endif %}
   </div>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  <script defer src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     crossorigin="anonymous"></script>
-  <script src="{% static 'js/navToggle.js' %}"></script>
-  <script src="{% static 'js/toast.js' %}"></script>
+  <script defer src="{% static 'js/navToggle.js' %}"></script>
+  <script defer src="{% static 'js/toast.js' %}"></script>
   {% block extra_js %}{% endblock %}
 </body>
 

@@ -1,13 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import JsonResponse
 from .models import Produto, Transportadora
+import logging
 
+
+logger = logging.getLogger(__name__)
 
 def produtos(request):
     try:
         produtos = Produto.objects.all()
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         messages.error(request, f"Erro ao carregar produtos!")
         produtos = []
     return render(request, "produtos/produtos.html", {"produtos": produtos})
@@ -27,6 +31,7 @@ def produto_detail(request, pk):
         except Produto.DoesNotExist:
             return JsonResponse({"error": "Produto não encontrado."}, status=404)
         except Exception as e:
+            logger.exception(e)
             return JsonResponse({"error": str(e)}, status=500)
     else:
         return JsonResponse({"error": "Método não permitido."}, status=405)
@@ -37,7 +42,8 @@ def produto_create(request):
         descricao = request.POST.get("descricao")
         preco = request.POST.get("preco") or None
         Produto.objects.create(nome=nome, descricao=descricao, preco=preco)
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         messages.error(request, f"Erro ao criar o produto!")
         return redirect("estoque:produtos")
     messages.success(request, "Produto criado com sucesso!")
@@ -54,7 +60,8 @@ def produto_update(request, pk):
     except Produto.DoesNotExist:
         messages.error(request, "Produto não encontrado.")
         return redirect("estoque:produtos")
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         messages.error(request, f"Erro ao atualizar o produto!")
         return redirect("estoque:produtos")
     messages.success(request, "Produto atualizado com sucesso!")
@@ -68,7 +75,8 @@ def produto_delete(request, pk):
     except Produto.DoesNotExist:
         messages.error(request, "Produto não encontrado.")
         return redirect("estoque:produtos")
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         messages.error(request, f"Erro ao deletar o produto!")
         return redirect("estoque:produtos")
     messages.success(request, "Produto deletado com sucesso!")
@@ -78,7 +86,8 @@ def produto_delete(request, pk):
 def transportadoras(request):
     try:
         transportadoras = Transportadora.objects.all()
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         messages.error(request, f"Erro ao carregar transportadoras!")
         transportadoras = []
     return render(
@@ -99,6 +108,7 @@ def transportadora_detail(request, pk):
         except Transportadora.DoesNotExist:
             return JsonResponse({"error": "Transportadora não encontrada."}, status=404)
         except Exception as e:
+            logger.exception(e)
             return JsonResponse({"error": str(e)}, status=500)
     else:
         return JsonResponse({"error": "Método não permitido."}, status=405)
@@ -107,7 +117,8 @@ def transportadora_create(request):
     try:
         nome = request.POST.get("nome")
         Transportadora.objects.create(nome=nome)
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         messages.error(request, f"Erro ao criar a transportadora!")
         return redirect("estoque:transportadoras")
     messages.success(request, "Transportadora criada com sucesso!")
@@ -122,7 +133,8 @@ def transportadora_update(request, pk):
     except Transportadora.DoesNotExist:
         messages.error(request, "Transportadora não encontrada.")
         return redirect("estoque:transportadoras")
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         messages.error(request, f"Erro ao atualizar a transportadora!")
         return redirect("estoque:transportadoras")
     messages.success(request, "Transportadora atualizada com sucesso!")
@@ -136,7 +148,8 @@ def transportadora_delete(request, pk):
     except Transportadora.DoesNotExist:
         messages.error(request, "Transportadora não encontrada.")
         return redirect("estoque:transportadoras")
-    except Exception:
+    except Exception as e:
+        logger.exception(e)
         messages.error(request, f"Erro ao deletar a transportadora!")
         return redirect("estoque:transportadoras")
     messages.success(request, "Transportadora deletada com sucesso!")
