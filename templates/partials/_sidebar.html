@@ -1,0 +1,78 @@
+{% load static %}
+<ul
+  class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+  id="accordionSidebar"
+>
+  <a
+    class="sidebar-brand d-flex align-items-center justify-content-center"
+    href="index.html"
+  >
+    <div class="sidebar-brand-icon rotate-n-15">
+      <i class="fas fa-shopping-bag"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">CommerSys</div>
+  </a>
+
+  <hr class="sidebar-divider my-0" />
+
+  <li
+    class="nav-item {% if 'index' in request.resolver_match.url_name %} active {% endif %}"
+  >
+    <a class="nav-link" href="{% url 'index' %}">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Dashboard</span></a
+    >
+  </li>
+
+  <hr class="sidebar-divider" />
+
+  <div class="sidebar-heading">Comercial</div>
+
+  <li
+    class="nav-item {% if 'pedido' in request.resolver_match.url_name %} active {% endif %}"
+  >
+    <a class="nav-link" href="#">
+      <i class="fas fa-shopping-cart"></i>
+      <span>Pedidos</span></a
+    >
+  </li>
+
+  <li
+    class="nav-item {% if 'cliente' in request.resolver_match.url_name %} active {% endif %}"
+  >
+    <a class="nav-link" href="#">
+      <i class="fas fa-users"></i>
+      <span>Clientes</span></a
+    >
+  </li>
+  <li
+    class="nav-item {% if 'contato' in request.resolver_match.url_name %} active {% endif %}"
+  >
+    <a class="nav-link" href="#">
+      <i class="fas fa-phone"></i>
+      <span>Contatos</span></a
+    >
+  </li>
+  <div class="sidebar-heading">Logística</div>
+  <li
+    class="nav-item {% if 'produto' in request.resolver_match.url_name %} active {% endif %}"
+  >
+    <a class="nav-link" href="{% url 'logistica:produtos' %}">
+      <i class="fas fa-boxes"></i>
+      <span>Produtos</span></a
+    >
+  </li>
+  <li
+    class="nav-item {% if 'transportadora' in request.resolver_match.url_name %} active {% endif %}"
+  >
+    <a class="nav-link" href="#">
+      <i class="fas fa-truck"></i>
+      <span>Transportadora</span></a
+    >
+  </li>
+
+  <hr class="sidebar-divider" />
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>
+</ul>
