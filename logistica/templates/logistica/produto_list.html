@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Produtos{% endblock title %}
 
@@ -34,13 +35,7 @@
                         <tr data-bs-detail="{% url 'logistica:produto_detail' produto.id %}" style="cursor: pointer;">
                             <td>{{ produto.nome }}</td>
                             <td>{{ produto.descricao|truncatechars:50 }}</td>
-                            <td>
-                                {% if produto.preco_base %}
-                                    R$ {{ produto.preco_base }}
-                                {% else %}
-                                    <span class="text-muted small">Nenhum valor</span>
-                                {% endif %}
-                            </td>
+                            <td>R$ {{ produto.preco_base|intcomma|default_if_none:'' }}</td>
                         </tr>
                     {% empty %}
                         <tr>

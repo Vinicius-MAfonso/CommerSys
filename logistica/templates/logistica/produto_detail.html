@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load humanize %}
 {% block title %}Produto{% endblock title %}
 
 {% block content %}
@@ -36,15 +36,15 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-4 text-muted">Preço Base:</div>
-                    <div class="col-sm-8">R$ {{ produto.preco_base }}</div>
+                    <div class="col-sm-8">R$ {{ produto.preco_base|intcomma }}</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-4 text-muted">NCM:</div>
                     <div class="col-sm-8">{{ produto.ncm }}</div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-sm-4 text-muted">Unidade Medida:</div>
-                    <div class="col-sm-8">{{ produto.unidade_medida }}</div>
+                    <div class="col-sm-4 text-muted">Unidade de Medida:</div>
+                    <div class="col-sm-8">{{ produto.get_unidade_medida_display }}</div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4 text-muted">Origem:</div>
