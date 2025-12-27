@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% block title %}
-    {% if form.instance.pk %}Editar Produto: {{ form.instance.nome }}{% else %}Novo Produto{% endif %}
+    {% if form.instance.pk %}Editar Produto{% else %}Novo Produto{% endif %}
 {% endblock title %}
 
 {% block content %}
