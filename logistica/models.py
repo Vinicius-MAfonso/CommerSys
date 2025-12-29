@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 class Produto(models.Model):
     ORIGEM_CHOICES = [
@@ -14,9 +15,9 @@ class Produto(models.Model):
     ]
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
-    preco_base = models.DecimalField(max_digits=10, decimal_places=2, help_text="Preço de venda padrão")
+    preco_base = models.DecimalField(max_digits=10, decimal_places=2)
     
-    ncm = models.CharField(max_length=8, help_text="8 dígitos - Nomenclatura Comum do Mercosul")
+    ncm = models.CharField(max_length=8, validators=[MinLengthValidator(8, 'Mínimo de 8 caracteres')])
     unidade_medida = models.IntegerField(choices=MEDIDA_CHOICES, default=0)
     origem = models.IntegerField(choices=ORIGEM_CHOICES, default=0)
 
@@ -27,7 +28,7 @@ class Produto(models.Model):
         return self.nome
 
 class Transportadora(models.Model):
-    nome_razao_social = models.CharField(max_length=150)
+    razao_social = models.CharField(max_length=150)
     cnpj = models.CharField(max_length=20, unique=True)
     inscricao_estadual = models.CharField(max_length=50, blank=True, null=True)
     
@@ -39,4 +40,4 @@ class Transportadora(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.nome_razao_social
+        return self.razao_social

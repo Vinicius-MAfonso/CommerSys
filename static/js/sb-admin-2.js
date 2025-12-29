@@ -1,7 +1,6 @@
 (function ($) {
-  "use strict"; // Start of use strict
+  "use strict";
 
-  // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on("click", function (e) {
     $("body").toggleClass("sidebar-toggled");
     $(".sidebar").toggleClass("toggled");
@@ -10,13 +9,11 @@
     }
   });
 
-  // Close any open menu accordions when window is resized below 768px
   $(window).resize(function () {
     if ($(window).width() < 768) {
       $(".sidebar .collapse").collapse("hide");
     }
 
-    // Toggle the side navigation when window is resized below 480px
     if ($(window).width() < 480 && !$(".sidebar").hasClass("toggled")) {
       $("body").addClass("sidebar-toggled");
       $(".sidebar").addClass("toggled");
@@ -24,7 +21,6 @@
     }
   });
 
-  // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
   $("body.fixed-nav .sidebar").on(
     "mousewheel DOMMouseScroll wheel",
     function (e) {
@@ -37,7 +33,6 @@
     }
   );
 
-  // Scroll to top button appear
   $(document).on("scroll", function () {
     var scrollDistance = $(this).scrollTop();
     if (scrollDistance > 100) {
@@ -47,7 +42,6 @@
     }
   });
 
-  // Smooth scrolling using jQuery easing
   $(document).on("click", "a.scroll-to-top", function (e) {
     var $anchor = $(this);
     $("html, body")
@@ -62,7 +56,3 @@
     e.preventDefault();
   });
 })(jQuery);
-
-document.querySelectorAll("select").forEach(function (el) {
-  el.classList.add("form-control");
-});
