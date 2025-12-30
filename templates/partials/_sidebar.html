@@ -65,7 +65,7 @@
   <li
     class="nav-item {% if 'transportadora' in request.resolver_match.url_name %} active {% endif %}"
   >
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{% url 'logistica:transportadoras' %}">
       <i class="fas fa-truck"></i>
       <span>Transportadora</span></a
     >

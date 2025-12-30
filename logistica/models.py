@@ -14,10 +14,10 @@ class Produto(models.Model):
         (3, 'L')
     ]
     nome = models.CharField(max_length=100)
-    descricao = models.TextField(blank=True, null=True)
+    descricao = models.CharField(max_length=100, blank=True, null=True)
     preco_base = models.DecimalField(max_digits=10, decimal_places=2)
     
-    ncm = models.CharField(max_length=8, validators=[MinLengthValidator(8, 'Mínimo de 8 caracteres')])
+    ncm = models.CharField(max_length=10)
     unidade_medida = models.IntegerField(choices=MEDIDA_CHOICES, default=0)
     origem = models.IntegerField(choices=ORIGEM_CHOICES, default=0)
 
@@ -28,13 +28,19 @@ class Produto(models.Model):
         return self.nome
 
 class Transportadora(models.Model):
-    razao_social = models.CharField(max_length=150)
+    nome = models.CharField(max_length=150)
     cnpj = models.CharField(max_length=20, unique=True)
+    email = models.EmailField(max_length=254, blank=True, null=True)
+    telefone = models.CharField(max_length=20, blank=True, null=True)
     inscricao_estadual = models.CharField(max_length=50, blank=True, null=True)
     
-    logradouro = models.CharField(max_length=150)
-    municipio = models.CharField(max_length=100)
-    uf = models.CharField(max_length=2)
+    cep = models.CharField(max_length=15, blank=True, null=True)
+    municipio = models.CharField(max_length=50, blank=True, null=True)
+    bairro = models.CharField(max_length=150, blank=True, null=True)
+    logradouro = models.CharField(max_length=150, blank=True, null=True)
+    complemento = models.CharField(max_length=150, blank=True, null=True)
+    numero = models.IntegerField(blank=True, null=True)
+    uf = models.CharField(max_length=2, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
