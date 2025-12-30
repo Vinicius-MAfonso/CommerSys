@@ -5,52 +5,58 @@
 {% block title %}Transportadoras{% endblock title %}
 
 {% block extra_css %}
-<link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 {% endblock extra_css %}
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Transportadoras</h1>
-    <a href="{% url 'logistica:transportadora_create' %}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-plus fa-sm text-white-50"></i><span class="d-none d-sm-inline"> Adicionar Transportadora</span></a></div>
+  <h1 class="h3 mb-0 text-gray-800">Transportadoras</h1>
+  <a href="{% url 'logistica:transportadora_create' %}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <i class="fas fa-plus fa-sm text-white-50"></i>
+    <span class="d-none d-sm-inline"> Adicionar Transportadora</span>
+  </a>
+</div>
 
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Listagem de Transportadoras</h6>
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Listagem de Transportadoras</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CNPJ</th>
+            <th>Telefone</th>
+            <th>E-mail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transportadora in transportadoras %}
+            <tr data-bs-detail="{% url 'logistica:transportadora_detail' transportadora.id %}" 
+                style="cursor: pointer;">
+              <td>{{ transportadora.nome|default_if_none:'Não inserido' }}</td>
+              <td>{{ transportadora.cnpj|default_if_none:'Não inserido' }}</td>
+              <td>{{ transportadora.telefone|default_if_none:'Não inserido' }}</td>
+              <td>{{ transportadora.email|default_if_none:'Não inserido' }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="4" class="text-center text-muted py-4">
+                Nenhuma transportadora cadastrada.
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>CNPJ</th>
-                        <th>Telefone</th>
-                        <th>E-mail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for transportadora in transportadoras %}
-                        <tr data-bs-detail="{% url 'logistica:transportadora_detail' transportadora.id %}" style="cursor: pointer;">
-                            <td>{{ transportadora.nome|default_if_none:'Não inserido' }}</td>
-                            <td>{{ transportadora.cnpj|default_if_none:'Não inserido' }}</td>
-                            <td>{{ transportadora.telefone|default_if_none:'Não inserido' }}</td>
-                            <td>{{ transportadora.email|default_if_none:'Não inserido' }}</td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="4" class="text-center">Nenhuma transportadora cadastrada.</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+  </div>
 </div>
 {% endblock content %}
 
 {% block extra_js %}
-<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-<script src="{% static 'js/datatable.js' %}"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+  <script src="{% static 'js/datatable.js' %}"></script>
 {% endblock extra_js %}

@@ -2,140 +2,143 @@
 {% load static %}
 {% load humanize %}
 {% load widget_tweaks %}
+
 {% block title %}
-    {% if form.instance.pk %}Editar Produto{% else %}Novo Produto{% endif %}
+  {% if form.instance.pk %}Editar Produto{% else %}Novo Produto{% endif %}
 {% endblock title %}
 
 {% block content %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-<div class="d-flex align-items-center">
-        <h1 class="h3 mb-0 text-gray-800">
-            {% if form.instance.pk %}Editar Produto{% else %}Novo Produto{% endif %}
-        </h1>
-    </div>
+  <div class="d-flex align-items-center">
+    <h1 class="h3 mb-0 text-gray-800">
+      {% if form.instance.pk %}Editar Produto{% else %}Novo Produto{% endif %}
+    </h1>
+  </div>
 
-    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-        <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="{% url 'logistica:produtos' %}">Produtos</a></li>
-            {% if form.instance.pk %}
-            <li class="breadcrumb-item">{{ form.instance.id }}</li>
-            <li class="breadcrumb-item active">Editar</li>
-            {% else %}
-            <li class="breadcrumb-item active">Novo</li>
-            {% endif %}
-        </ol>
-    </nav>
+  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item"><a href="{% url 'logistica:produtos' %}">Produtos</a></li>
+      {% if form.instance.pk %}
+        <li class="breadcrumb-item">{{ form.instance.id }}</li>
+        <li class="breadcrumb-item active">Editar</li>
+      {% else %}
+        <li class="breadcrumb-item active">Novo</li>
+      {% endif %}
+    </ol>
+  </nav>
 </div>
 
 <form method="post" novalidate>
-    {% csrf_token %}
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Informações Gerais</h6>
-                </div>
-                <div class="card-body">
-                    <div class="form-group mb-3">
-                        <label for="{{ form.nome.id_for_label }}" class="text-muted small font-weight-bold">Nome do Produto*</label>
-                        {% render_field form.nome|add_error_class:"is-invalid" %}
-                        {% if form.nome.errors %}
-                        {% for error in form.nome.errors %}
-                            <div class="text-danger small mt-1">{{ error }}</div>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="{{ form.descricao.id_for_label }}" class="text-muted small font-weight-bold">Descrição</label>
-                        {% render_field form.descricao|add_error_class:"is-invalid" %}
-                        {% if form.descricao.errors %}
-                        {% for error in form.descricao.errors %}
-                            <div class="text-danger small mt-1">{{ error }}</div>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="{{ form.preco_base.id_for_label }}" class="text-muted small font-weight-bold">Preço Base (R$)*</label>
-                            {% render_field form.preco_base|add_error_class:"is-invalid" %}
-                            {% if form.preco_base.errors %}
-                            {% for error in form.preco_base.errors %}
-                                <div class="text-danger small mt-1">{{ error }}</div>
-                            {% endfor %}
-                            {% endif %}
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="{{ form.ncm.id_for_label }}" class="text-muted small font-weight-bold">NCM*</label>
-                            {% render_field form.ncm|add_error_class:"is-invalid" %}
-                            {% if form.ncm.errors %}
-                            {% for error in form.ncm.errors %}
-                                <div class="text-danger small mt-1">{{ error }}</div>
-                            {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="{{ form.unidade_medida.id_for_label }}" class="text-muted small font-weight-bold">Unidade de Medida*</label>
-                            {% render_field form.unidade_medida|add_error_class:"is-invalid" %}
-                            {% if form.unidade_medida.errors %}
-                                <div class="text-danger small mt-1">{{ form.unidade_medida.errors.0 }}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="col-md-6 form-group mb-3">
-                            <label for="{{ form.origem.id_for_label }}" class="text-muted small font-weight-bold">Origem*</label>
-                            {% render_field form.origem|add_error_class:"is-invalid" %}
-                            {% if form.origem.errors %}
-                                <div class="text-danger small mt-1">{{ form.origem.errors.0 }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </div>
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Informações Gerais</h6>
         </div>
-
-        <div class="col-lg-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Ações</h6>
-                </div>
-                <div class="card-body">
-                    <button type="submit" class="btn btn-primary btn-block btn-icon-split mb-2">
-                        <span class="text">Salvar Alterações</span>
-                    </button>
-                    
-                    <a href="{% if form.instance.pk %}{% url 'logistica:produto_detail' form.instance.pk %}{% else %}{% url 'logistica:produtos' %}{% endif %}" 
-                       class="btn btn-secondary btn-block">
-                        Cancelar
-                    </a>
-                </div>
-            </div>
-            
-            {% if form.instance.pk %}
-            <div class="card border-left-info shadow py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Última Atualização</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800 small">{{ form.instance.updated_at|date:"d/m/Y H:i" }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-history fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="card-body">
+          <div class="form-group mb-3">
+            <label for="{{ form.nome.id_for_label }}" class="text-muted small font-weight-bold">Nome do Produto*</label>
+            {% render_field form.nome|add_error_class:"is-invalid" %}
+            {% if form.nome.errors %}
+              {% for error in form.nome.errors %}
+                <div class="text-danger small mt-1">{{ error }}</div>
+              {% endfor %}
             {% endif %}
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="{{ form.descricao.id_for_label }}" class="text-muted small font-weight-bold">Descrição</label>
+            {% render_field form.descricao|add_error_class:"is-invalid" %}
+            {% if form.descricao.errors %}
+              {% for error in form.descricao.errors %}
+                <div class="text-danger small mt-1">{{ error }}</div>
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group mb-3">
+              <label for="{{ form.preco_base.id_for_label }}" class="text-muted small font-weight-bold">Preço Base (R$)*</label>
+              {% render_field form.preco_base|add_error_class:"is-invalid" %}
+              {% if form.preco_base.errors %}
+                {% for error in form.preco_base.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <div class="col-md-6 form-group mb-3">
+              <label for="{{ form.ncm.id_for_label }}" class="text-muted small font-weight-bold">NCM*</label>
+              {% render_field form.ncm|add_error_class:"is-invalid" %}
+              {% if form.ncm.errors %}
+                {% for error in form.ncm.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 form-group mb-3">
+              <label for="{{ form.unidade_medida.id_for_label }}" class="text-muted small font-weight-bold">Unidade de Medida*</label>
+              {% render_field form.unidade_medida|add_error_class:"is-invalid" %}
+              {% if form.unidade_medida.errors %}
+                <div class="text-danger small mt-1">{{ form.unidade_medida.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6 form-group mb-3">
+              <label for="{{ form.origem.id_for_label }}" class="text-muted small font-weight-bold">Origem*</label>
+              {% render_field form.origem|add_error_class:"is-invalid" %}
+              {% if form.origem.errors %}
+                <div class="text-danger small mt-1">{{ form.origem.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+
+    <div class="col-lg-4">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Ações</h6>
+        </div>
+        <div class="card-body">
+          <button type="submit" class="btn btn-primary btn-block btn-icon-split mb-2">
+            <span class="text">Salvar Alterações</span>
+          </button>
+          
+          <a href="{% if form.instance.pk %}{% url 'logistica:produto_detail' form.instance.pk %}{% else %}{% url 'logistica:produtos' %}{% endif %}" 
+             class="btn btn-secondary btn-block">
+            Cancelar
+          </a>
+        </div>
+      </div>
+      
+      {% if form.instance.pk %}
+        <div class="card border-left-info shadow py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Última Atualização</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800 small">
+                  {{ form.instance.updated_at|date:"d/m/Y H:i" }}
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-history fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 </form>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/masks.js' %}"></script>
+  <script src="{% static 'js/masks.js' %}"></script>
 {% endblock extra_js %}
