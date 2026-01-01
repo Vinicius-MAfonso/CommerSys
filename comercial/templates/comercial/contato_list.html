@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 
-{% block title %}Transportadoras{% endblock title %}
+{% block title %}Contatos{% endblock title %}
 
 {% block extra_css %}
   <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -10,16 +10,16 @@
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Transportadoras</h1>
-  <a href="{% url 'logistica:transportadora_create' %}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+  <h1 class="h3 mb-0 text-gray-800">Contatos</h1>
+  <a href="{% url 'comercial:contato_create' %}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
     <i class="fas fa-plus fa-sm text-white-50"></i>
-    <span class="d-none d-sm-inline"> Adicionar Transportadora</span>
+    <span class="d-none d-sm-inline"> Adicionar Contato</span>
   </a>
 </div>
 
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Listagem de Transportadoras</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Listagem de Contatos</h6>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -27,24 +27,22 @@
         <thead>
           <tr>
             <th>Nome</th>
-            <th>CNPJ</th>
             <th>E-mail</th>
             <th>Telefone</th>
           </tr>
         </thead>
         <tbody>
-          {% for transportadora in transportadoras %}
-            <tr data-bs-detail="{% url 'logistica:transportadora_detail' transportadora.id %}" 
+          {% for contato in contatos %}
+            <tr data-bs-detail="{% url 'comercial:contato_detail' contato.id %}" 
                 style="cursor: pointer;">
-              <td>{{ transportadora.nome|default_if_none:'Não inserido' }}</td>
-              <td>{{ transportadora.cnpj|default_if_none:'Não inserido' }}</td>
-              <td>{{ transportadora.email|default_if_none:'Não inserido' }}</td>
-              <td>{{ transportadora.telefone|default_if_none:'Não inserido' }}</td>
+              <td>{{ contato.nome|default_if_none:'Não inserido' }}</td>
+              <td>{{ contato.email|default_if_none:'Não inserido' }}</td>
+              <td>{{ contato.telefone|default_if_none:'Não inserido' }}</td>
             </tr>
           {% empty %}
             <tr>
               <td colspan="4" class="text-center text-muted py-4">
-                Nenhuma transportadora cadastrada.
+                Nenhum contato cadastrado.
               </td>
             </tr>
           {% endfor %}

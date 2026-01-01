@@ -49,10 +49,17 @@
             </div>
             <div class="col-md-6 form-group mb-3">
               <label for="{{ form.cnpj.id_for_label }}" class="text-muted small font-weight-bold">CNPJ*</label>
-              {% render_field form.cnpj|add_error_class:"is-invalid" %}
+              <div class="input-group">
+                {% render_field form.cnpj|add_error_class:"is-invalid" %}
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="button" id="btnCnpj" title="Preencher com CNPJ">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
               {% if form.cnpj.errors %}
                 {% for error in form.cnpj.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
+                <div class="text-danger small mt-1">{{ error }}</div>
                 {% endfor %}
               {% endif %}
             </div>
@@ -60,19 +67,19 @@
 
           <div class="row">
             <div class="col-md-4 form-group mb-3">
-              <label for="{{ form.telefone.id_for_label }}" class="text-muted small font-weight-bold">Telefone</label>
-              {% render_field form.telefone|add_error_class:"is-invalid" %}
-              {% if form.telefone.errors %}
-                {% for error in form.telefone.errors %}
+              <label for="{{ form.email.id_for_label }}" class="text-muted small font-weight-bold">E-mail</label>
+              {% render_field form.email|add_error_class:"is-invalid" %}
+              {% if form.email.errors %}
+                {% for error in form.email.errors %}
                   <div class="text-danger small mt-1">{{ error }}</div>
                 {% endfor %}
               {% endif %}
             </div>
             <div class="col-md-4 form-group mb-3">
-              <label for="{{ form.email.id_for_label }}" class="text-muted small font-weight-bold">E-mail</label>
-              {% render_field form.email|add_error_class:"is-invalid" %}
-              {% if form.email.errors %}
-                {% for error in form.email.errors %}
+              <label for="{{ form.telefone.id_for_label }}" class="text-muted small font-weight-bold">Telefone</label>
+              {% render_field form.telefone|add_error_class:"is-invalid" %}
+              {% if form.telefone.errors %}
+                {% for error in form.telefone.errors %}
                   <div class="text-danger small mt-1">{{ error }}</div>
                 {% endfor %}
               {% endif %}
@@ -91,10 +98,17 @@
           <div class="row">
             <div class="col-md-2 form-group mb-3">
               <label for="{{ form.cep.id_for_label }}" class="text-muted small font-weight-bold">CEP</label>
-              {% render_field form.cep|add_error_class:"is-invalid" %}
+              <div class="input-group">
+                {% render_field form.cep|add_error_class:"is-invalid" %}
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="button" id="btnCep" title="Preencher com CEP">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
               {% if form.cep.errors %}
                 {% for error in form.cep.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
+                <div class="text-danger small mt-1">{{ error }}</div>
                 {% endfor %}
               {% endif %}
             </div>

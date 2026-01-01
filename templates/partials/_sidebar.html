@@ -48,7 +48,7 @@
   <li
     class="nav-item {% if 'contato' in request.resolver_match.url_name %} active {% endif %}"
   >
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{% url 'comercial:contatos' %}">
       <i class="fas fa-phone"></i>
       <span>Contatos</span></a
     >

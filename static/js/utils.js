@@ -11,8 +11,8 @@ function capitilize(string) {
 }
 
 document
-  .getElementById("id_cnpj")
-  .addEventListener("blur", async function (event) {
+  .getElementById("btnCnpj")
+  .addEventListener("click", async function (event) {
     const cnpjLimpo = this.value.replace(/\D/g, "");
 
     if (cnpjLimpo.length !== 14) {
@@ -49,8 +49,8 @@ document
   });
 
 document
-  .getElementById("id_cep")
-  .addEventListener("blur", async function (event) {
+  .getElementById("btnCep")
+  .addEventListener("click", async function (event) {
     const cepLimpo = this.value.replace(/\D/g, "");
 
     if (cepLimpo.length !== 8) {

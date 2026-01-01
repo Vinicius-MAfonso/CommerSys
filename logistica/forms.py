@@ -34,8 +34,8 @@ class TransportadoraForm(forms.ModelForm):
         model = Transportadora
         fields = [
             "nome",
-            "telefone",
             "email",
+            "telefone",
             "cnpj",
             "inscricao_estadual",
             "cep",
@@ -48,11 +48,11 @@ class TransportadoraForm(forms.ModelForm):
         ]
         widgets = {
             "nome": forms.TextInput(attrs={"class": "form-control"}),
-            "telefone": forms.TextInput(
-                attrs={"class": "form-control phone", "placeholder": "(00) 0000-0000"}
-            ),
             "email": forms.TextInput(
                 attrs={"class": "form-control"}
+            ),
+            "telefone": forms.TextInput(
+                attrs={"class": "form-control phone", "placeholder": "(00) 0000-0000"}
             ),
             "cnpj": forms.TextInput(
                 attrs={
