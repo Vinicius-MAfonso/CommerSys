@@ -6,8 +6,42 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Contato
-from .forms import ContatoForm
+from .models import Contato, Cliente
+from .forms import ContatoForm, ClienteForm
+
+class ClienteListView(ListView):
+    model = Cliente
+    template_name = "comercial/cliente_list.html"
+    context_object_name = "clientes"
+
+
+class ClienteCreateView(CreateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = "comercial/cliente_form.html"
+    success_url = reverse_lazy("comercial:clientes")
+
+
+class ClienteDetailView(DetailView):
+    model = Cliente
+    template_name = "comercial/cliente_detail.html"
+    context_object_name = "cliente"
+
+
+class ClienteUpdateView(UpdateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = "comercial/cliente_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "comercial:cliente_detail", kwargs={"pk": self.object.pk}
+        )
+
+
+class ClienteDeleteView(DeleteView):
+    model = Cliente
+    success_url = reverse_lazy("comercial:clientes")
 
 
 class ContatoListView(ListView):

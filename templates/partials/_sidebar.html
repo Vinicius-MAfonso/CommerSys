@@ -40,7 +40,7 @@
   <li
     class="nav-item {% if 'cliente' in request.resolver_match.url_name %} active {% endif %}"
   >
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{% url 'comercial:clientes' %}">
       <i class="fas fa-users"></i>
       <span>Clientes</span></a
     >

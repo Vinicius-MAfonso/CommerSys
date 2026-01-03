@@ -34,7 +34,7 @@
     <div class="col-lg-8">
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Informações Gerais</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Informações Básicas</h6>
         </div>
         <div class="card-body">
           <div class="row">
@@ -64,7 +64,6 @@
               {% endif %}
             </div>
           </div>
-
           <div class="row">
             <div class="col-md-4 form-group mb-3">
               <label for="{{ form.email.id_for_label }}" class="text-muted small font-weight-bold">E-mail</label>
@@ -94,86 +93,9 @@
               {% endif %}
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-md-2 form-group mb-3">
-              <label for="{{ form.cep.id_for_label }}" class="text-muted small font-weight-bold">CEP</label>
-              <div class="input-group">
-                {% render_field form.cep|add_error_class:"is-invalid" %}
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary" type="button" id="btnCep" title="Preencher com CEP">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-              {% if form.cep.errors %}
-                {% for error in form.cep.errors %}
-                <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <div class="col-md-2 form-group mb-3">
-              <label for="{{ form.uf.id_for_label }}" class="text-muted small font-weight-bold">UF</label>
-              {% render_field form.uf|add_error_class:"is-invalid" %}
-              {% if form.uf.errors %}
-                {% for error in form.uf.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <div class="col-md-4 form-group mb-3">
-              <label for="{{ form.municipio.id_for_label }}" class="text-muted small font-weight-bold">Municipio</label>
-              {% render_field form.municipio|add_error_class:"is-invalid" %}
-              {% if form.municipio.errors %}
-                {% for error in form.municipio.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <div class="col-md-4 form-group mb-3">
-              <label for="{{ form.bairro.id_for_label }}" class="text-muted small font-weight-bold">Bairro</label>
-              {% render_field form.bairro|add_error_class:"is-invalid" %}
-              {% if form.bairro.errors %}
-                {% for error in form.bairro.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6 form-group mb-3">
-              <label for="{{ form.logradouro.id_for_label }}" class="text-muted small font-weight-bold">Logradouro</label>
-              {% render_field form.logradouro|add_error_class:"is-invalid" %}
-              {% if form.logradouro.errors %}
-                {% for error in form.logradouro.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <div class="col-md-2 form-group mb-3">
-              <label for="{{ form.numero.id_for_label }}" class="text-muted small font-weight-bold">Número</label>
-              {% render_field form.numero|add_error_class:"is-invalid" %}
-              {% if form.numero.errors %}
-                {% for error in form.numero.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <div class="col-md-4 form-group mb-3">
-              <label for="{{ form.complemento.id_for_label }}" class="text-muted small font-weight-bold">Complemento</label>
-              {% render_field form.complemento|add_error_class:"is-invalid" %}
-              {% if form.complemento.errors %}
-                {% for error in form.complemento.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
         </div>
       </div>
     </div>
-
     <div class="col-lg-4">
       <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -183,14 +105,12 @@
           <button type="submit" class="btn btn-primary btn-block btn-icon-split mb-2">
             <span class="text">Salvar Alterações</span>
           </button>
-          
           <a href="{% if form.instance.pk %}{% url 'logistica:transportadora_detail' form.instance.pk %}{% else %}{% url 'logistica:transportadoras' %}{% endif %}" 
              class="btn btn-secondary btn-block">
             Cancelar
           </a>
         </div>
       </div>
-      
       {% if form.instance.pk %}
         <div class="card border-left-info shadow py-2">
           <div class="card-body">

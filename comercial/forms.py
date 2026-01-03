@@ -1,6 +1,52 @@
 from django import forms
-from .models import Contato
+from .models import Contato, Cliente
 
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = [
+            "tipo_pessoa",
+            "cpf_cnpj",
+            "nome_razao_social",
+            "nome_fantasia",
+            "inscricao_estadual",
+            "indicador_ie",
+            "email",
+            "telefone",
+            "cep",
+            "uf",
+            "municipio",
+            "codigo_municipio",
+            "bairro",
+            "logradouro",
+            "numero",
+            "complemento",
+        ]
+        widgets = {
+            "tipo_pessoa": forms.Select(attrs={"class": "form-control"}),
+            "cpf_cnpj": forms.TextInput(attrs={"class": "form-control cpf_cnpj", "placeholder": "00.000.000-00",}),
+            "inscricao_estadual": forms.TextInput(
+                attrs={"class": "form-control ie", "placeholder": "000.000.000.000"}
+            ),
+            "nome_razao_social": forms.TextInput(attrs={"class": "form-control"}),
+            "nome_fantasia": forms.TextInput(attrs={"class": "form-control"}),
+
+            "indicador_ie": forms.Select(attrs={"class": "form-control"}),
+            "email": forms.TextInput(attrs={"class": "form-control"}),
+            "telefone": forms.TextInput(
+                attrs={"class": "form-control phone", "placeholder": "(00) 0000-0000"}
+            ),
+            "cep": forms.TextInput(
+                attrs={"class": "form-control cep", "placeholder": "00000-000"}
+            ),
+            "uf": forms.TextInput(attrs={"class": "form-control"}),
+            "municipio": forms.TextInput(attrs={"class": "form-control"}),
+            "codigo_municipio": forms.TextInput(attrs={"class": "form-control"}),
+            "bairro": forms.TextInput(attrs={"class": "form-control"}),
+            "logradouro": forms.TextInput(attrs={"class": "form-control"}),
+            "numero": forms.TextInput(attrs={"class": "form-control"}),
+            "complemento": forms.TextInput(attrs={"class": "form-control"}),
+        }
 
 class ContatoForm(forms.ModelForm):
     class Meta:

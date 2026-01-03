@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %}Transportadora{% endblock title %}
+{% block title %}Cliente: {{ cliente.nome }}{% endblock title %}
 
 {% block content %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <div class="d-flex align-items-center">
-    <a href="{% url 'logistica:transportadoras' %}" class="btn btn-sm btn-secondary shadow-sm mr-3">
+    <a href="{% url 'comercial:clientes' %}" class="btn btn-sm btn-secondary shadow-sm mr-3">
       <i class="fas fa-arrow-left fa-sm text-white-50"></i>
     </a>
-    <h1 class="h3 mb-0 text-gray-800">Detalhes da Transportadora</h1>
+    <h1 class="h3 mb-0 text-gray-800">Detalhes do Cliente</h1>
   </div>
 
   <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
     <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item"><a href="{% url 'logistica:transportadoras' %}">Transportadoras</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ transportadora.id }}</li>
+      <li class="breadcrumb-item"><a href="{% url 'comercial:clientes' %}">Clientes</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ cliente.id }}</li>
     </ol>
   </nav>
 </div>
@@ -27,24 +27,16 @@
       </div>
       <div class="card-body">
         <div class="row mb-3">
-          <div class="col-sm-4 text-muted">Nome da Transportadora:</div>
-          <div class="col-sm-8 font-weight-bold">{{ transportadora.nome|default_if_none:'Não inserido' }}</div>
+          <div class="col-sm-4 text-muted">Nome / Razão Social:</div>
+          <div class="col-sm-8 font-weight-bold">{{ cliente.nome|default_if_none:'Não inserido' }}</div>
         </div>
         <div class="row mb-3">
-          <div class="col-sm-4 text-muted">CNPJ:</div>
-          <div class="col-sm-8">{{ transportadora.cnpj|default_if_none:'Não inserido' }}</div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-sm-4 text-muted">E-mail:</div>
-          <div class="col-sm-8">{{ transportadora.email|default_if_none:'Não inserido' }}</div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-sm-4 text-muted">Telefone:</div>
-          <div class="col-sm-8">{{ transportadora.telefone|default_if_none:'Não inserido' }}</div>
+          <div class="col-sm-4 text-muted">E-mail Corporativo:</div>
+          <div class="col-sm-8">{{ cliente.email|default_if_none:'Não inserido' }}</div>
         </div>
         <div class="row">
-          <div class="col-sm-4 text-muted">Inscrição Estadual:</div>
-          <div class="col-sm-8">{{ transportadora.inscricao_estadual|default_if_none:'Não inserido' }}</div>
+          <div class="col-sm-4 text-muted">Telefone de Contato:</div>
+          <div class="col-sm-8">{{ cliente.telefone|default_if_none:'Não inserido' }}</div>
         </div>
       </div>
     </div>
@@ -53,29 +45,32 @@
   <div class="col-lg-4">
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Status & Logísticas</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Status & Logística</h6>
       </div>
       <div class="card-body">
         <div class="text-center mb-4">
-          <i class="fas fa-truck fa-3x text-gray-300"></i>
+          <i class="fas fa-user-tie fa-3x text-gray-300"></i>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-            Criado em:
-            <span class="text-xs">{{ transportadora.created_at|date:"M d, Y" }}</span>
+            Cadastrado em:
+            <span class="text-xs">{{ cliente.created_at|date:"d/m/Y" }}</span>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-            Ultima atualização:
-            <span class="text-xs">{{ transportadora.updated_at|timesince }} atrás</span>
+            Última atualização:
+            <span class="text-xs">{{ cliente.updated_at|timesince }} atrás</span>
           </li>
         </ul>
 
         <div class="mt-4">
-          <a href="{% url 'logistica:transportadora_edit' transportadora.id %}" class="btn btn-primary btn-block btn-icon-split mb-2">
-            <span class="text">Editar Transportadora</span>
+          <a href="{% url 'comercial:cliente_edit' cliente.id %}" class="btn btn-primary btn-block btn-icon-split mb-2">
+            <span class="icon text-white-50">
+              <i class="fas fa-edit"></i>
+            </span>
+            <span class="text">Editar Cliente</span>
           </a>
           <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#deleteModal">
-            Deletar Transportadora
+            Excluir Cliente
           </button>
         </div>
       </div>
@@ -96,14 +91,14 @@
         <div class="mb-3">
           <i class="fas fa-exclamation-triangle fa-3x text-warning"></i>
         </div>
-        <p>Você tem certeza que deseja excluir permanentemente a transportadora:</p>
-        <h5 class="font-weight-bold text-danger">{{ transportadora.nome|default_if_none:'Não inserido' }}</h5>
-        <p class="small text-muted">Esta ação não poderá ser desfeita.</p>
+        <p>Você tem certeza que deseja excluir permanentemente o cliente:</p>
+        <h5 class="font-weight-bold text-danger">{{ cliente.nome|default_if_none:'Não inserido' }}</h5>
+        <p class="small text-muted">Esta ação removerá todos os dados associados e não poderá ser desfeita.</p>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
 
-        <form action="{% url 'logistica:transportadora_delete' transportadora.id %}" method="post">
+        <form action="{% url 'comercial:cliente_delete' cliente.id %}" method="post">
           {% csrf_token %}
           <button type="submit" class="btn btn-danger btn-icon-split">
             <span class="icon text-white-50">

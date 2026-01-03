@@ -4,6 +4,11 @@ from . import views
 app_name = 'comercial'
 
 urlpatterns = [
+    path('clientes/', views.ClienteListView.as_view(), name='clientes'),
+    path('clientes/novo/', views.ClienteCreateView.as_view(), name='cliente_create'),
+    path('clientes/<int:pk>/', views.ClienteDetailView.as_view(), name='cliente_detail'),
+    path('clientes/<int:pk>/editar/', views.ClienteUpdateView.as_view(), name='cliente_edit'),
+    path('clientes/<int:pk>/deletar/', views.ClienteDeleteView.as_view(), name='cliente_delete'),
     path('contatos/', views.ContatoListView.as_view(), name='contatos'),
     path('contatos/novo/', views.ContatoCreateView.as_view(), name='contato_create'),
     path('contatos/<int:pk>/', views.ContatoDetailView.as_view(), name='contato_detail'),

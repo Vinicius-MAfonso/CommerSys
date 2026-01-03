@@ -38,13 +38,6 @@ class TransportadoraForm(forms.ModelForm):
             "telefone",
             "cnpj",
             "inscricao_estadual",
-            "cep",
-            "municipio",
-            "bairro",
-            "logradouro",
-            "complemento",
-            "numero",
-            "uf",
         ]
         widgets = {
             "nome": forms.TextInput(attrs={"class": "form-control"}),
@@ -63,13 +56,4 @@ class TransportadoraForm(forms.ModelForm):
             "inscricao_estadual": forms.TextInput(
                 attrs={"class": "form-control ie", "placeholder": "000.000.000.000"}
             ),
-            "cep": forms.TextInput(
-                attrs={"class": "form-control cep", "placeholder": "00000-000"}
-            ),
-            "municipio": forms.TextInput(attrs={"class": "form-control"}),
-            "bairro": forms.TextInput(attrs={"class": "form-control"}),
-            "logradouro": forms.TextInput(attrs={"class": "form-control"}),
-            "complemento": forms.TextInput(attrs={"class": "form-control"}),
-            "numero": forms.TextInput(attrs={"class": "form-control"}),
-            "uf": forms.TextInput(attrs={"class": "form-control"}),
         }
