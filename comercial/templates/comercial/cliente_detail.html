@@ -1,114 +1,161 @@
 {% extends 'base.html' %}
-
-{% block title %}Cliente: {{ cliente.nome }}{% endblock title %}
-
+{% block title %}
+    Cliente
+{% endblock title %}
 {% block content %}
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <div class="d-flex align-items-center">
-    <a href="{% url 'comercial:clientes' %}" class="btn btn-sm btn-secondary shadow-sm mr-3">
-      <i class="fas fa-arrow-left fa-sm text-white-50"></i>
-    </a>
-    <h1 class="h3 mb-0 text-gray-800">Detalhes do Cliente</h1>
-  </div>
-
-  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item"><a href="{% url 'comercial:clientes' %}">Clientes</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ cliente.id }}</li>
-    </ol>
-  </nav>
-</div>
-
-<div class="row">
-  <div class="col-lg-8">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Informações Gerais</h6>
-      </div>
-      <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-sm-4 text-muted">Nome / Razão Social:</div>
-          <div class="col-sm-8 font-weight-bold">{{ cliente.nome|default_if_none:'Não inserido' }}</div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center">
+            <a href="{% url 'comercial:clientes' %}"
+               class="btn btn-sm btn-secondary shadow-sm mr-3">
+                <i class="fas fa-arrow-left fa-sm text-white-50"></i>
+            </a>
+            <h1 class="h3 mb-0 text-gray-800">Detalhes do Cliente</h1>
         </div>
-        <div class="row mb-3">
-          <div class="col-sm-4 text-muted">E-mail Corporativo:</div>
-          <div class="col-sm-8">{{ cliente.email|default_if_none:'Não inserido' }}</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4 text-muted">Telefone de Contato:</div>
-          <div class="col-sm-8">{{ cliente.telefone|default_if_none:'Não inserido' }}</div>
-        </div>
-      </div>
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'comercial:clientes' %}">Clientes</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ cliente.id }}</li>
+            </ol>
+        </nav>
     </div>
-  </div>
-
-  <div class="col-lg-4">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Status & Logística</h6>
-      </div>
-      <div class="card-body">
-        <div class="text-center mb-4">
-          <i class="fas fa-user-tie fa-3x text-gray-300"></i>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Informações Gerais</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Nome Completo / Razão Social:</div>
+                        <div class="col-sm-8 font-weight-bold">{{ cliente.nome_razao_social|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">CPF / CNPJ:</div>
+                        <div class="col-sm-8">{{ cliente.cpf_cnpj|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">E-mail:</div>
+                        <div class="col-sm-8">{{ cliente.email|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Telefone:</div>
+                        <div class="col-sm-8">{{ cliente.telefone|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Inscrição Estadual:</div>
+                        <div class="col-sm-8">{{ cliente.inscricao_estadual|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Indicador IE:</div>
+                        <div class="col-sm-8">{{ cliente.get_indicador_ie_display|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">CEP</div>
+                        <div class="col-sm-8">{{ cliente.cep|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">UF:</div>
+                        <div class="col-sm-8">{{ cliente.uf|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Municipio:</div>
+                        <div class="col-sm-8">{{ cliente.municipio|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Código Municipio:</div>
+                        <div class="col-sm-8">{{ cliente.codigo_municipio|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Bairro:</div>
+                        <div class="col-sm-8">{{ cliente.bairro|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Logradouro:</div>
+                        <div class="col-sm-8">{{ cliente.logradouro|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Número:</div>
+                        <div class="col-sm-8">{{ cliente.numero|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 text-muted">Complemento:</div>
+                        <div class="col-sm-8">{{ cliente.complemento|default_if_none:'Não inserido' }}</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-            Cadastrado em:
-            <span class="text-xs">{{ cliente.created_at|date:"d/m/Y" }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-            Última atualização:
-            <span class="text-xs">{{ cliente.updated_at|timesince }} atrás</span>
-          </li>
-        </ul>
-
-        <div class="mt-4">
-          <a href="{% url 'comercial:cliente_edit' cliente.id %}" class="btn btn-primary btn-block btn-icon-split mb-2">
-            <span class="icon text-white-50">
-              <i class="fas fa-edit"></i>
-            </span>
-            <span class="text">Editar Cliente</span>
-          </a>
-          <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#deleteModal">
-            Excluir Cliente
-          </button>
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Status & Logística</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-tie fa-3x text-gray-300"></i>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            Cadastrado em:
+                            <span class="text-xs">{{ cliente.created_at|date:"d/m/Y" }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            Última atualização:
+                            <span class="text-xs">{{ cliente.updated_at|timesince }} atrás</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="{% url 'comercial:cliente_edit' cliente.id %}"
+                           class="btn btn-primary btn-block btn-icon-split mb-2">
+                            <span class="text">Editar Cliente</span>
+                        </a>
+                        <button type="button"
+                                class="btn btn-outline-danger btn-block"
+                                data-toggle="modal"
+                                data-target="#deleteModal">Excluir Cliente</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content border-bottom-danger">
-      <div class="modal-header">
-        <h5 class="modal-title text-gray-800 font-weight-bold" id="deleteModalLabel">Confirmar Exclusão</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <div class="mb-3">
-          <i class="fas fa-exclamation-triangle fa-3x text-warning"></i>
+    <div class="modal fade"
+         id="deleteModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content border-bottom-danger">
+                <div class="modal-header">
+                    <h5 class="modal-title text-gray-800 font-weight-bold"
+                        id="deleteModalLabel">Confirmar Exclusão</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-exclamation-triangle fa-3x text-warning"></i>
+                    </div>
+                    <p>Você tem certeza que deseja excluir permanentemente o cliente:</p>
+                    <h5 class="font-weight-bold text-danger">{{ cliente.nome_razao_social|default_if_none:'Não inserido' }}</h5>
+                    <p class="small text-muted">Esta ação removerá todos os dados associados e não poderá ser desfeita.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <form action="{% url 'comercial:cliente_delete' cliente.id %}"
+                          method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span class="text">Sim, Excluir</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <p>Você tem certeza que deseja excluir permanentemente o cliente:</p>
-        <h5 class="font-weight-bold text-danger">{{ cliente.nome|default_if_none:'Não inserido' }}</h5>
-        <p class="small text-muted">Esta ação removerá todos os dados associados e não poderá ser desfeita.</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-
-        <form action="{% url 'comercial:cliente_delete' cliente.id %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger btn-icon-split">
-            <span class="icon text-white-50">
-              <i class="fas fa-trash"></i>
-            </span>
-            <span class="text">Sim, Excluir</span>
-          </button>
-        </form>
-      </div>
     </div>
-  </div>
-</div>
 {% endblock %}

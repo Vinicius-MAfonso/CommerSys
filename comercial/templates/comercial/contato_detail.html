@@ -1,111 +1,117 @@
 {% extends 'base.html' %}
-
-{% block title %}Contato{% endblock title %}
-
+{% block title %}
+    Contato
+{% endblock title %}
 {% block content %}
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <div class="d-flex align-items-center">
-    <a href="{% url 'comercial:contatos' %}" class="btn btn-sm btn-secondary shadow-sm mr-3">
-      <i class="fas fa-arrow-left fa-sm text-white-50"></i>
-    </a>
-    <h1 class="h3 mb-0 text-gray-800">Detalhes do Contato</h1>
-  </div>
-
-  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item"><a href="{% url 'comercial:contatos' %}">Contatos</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ contato.id }}</li>
-    </ol>
-  </nav>
-</div>
-
-<div class="row">
-  <div class="col-lg-8">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Informações Gerais</h6>
-      </div>
-      <div class="card-body">
-        <div class="row mb-3">
-          <div class="col-sm-4 text-muted">Nome do Contato:</div>
-          <div class="col-sm-8 font-weight-bold">{{ contato.nome|default_if_none:'Não inserido' }}</div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center">
+            <a href="{% url 'comercial:contatos' %}"
+               class="btn btn-sm btn-secondary shadow-sm mr-3">
+                <i class="fas fa-arrow-left fa-sm text-white-50"></i>
+            </a>
+            <h1 class="h3 mb-0 text-gray-800">Detalhes do Contato</h1>
         </div>
-        <div class="row mb-3">
-          <div class="col-sm-4 text-muted">E-mail:</div>
-          <div class="col-sm-8">{{ contato.email|default_if_none:'Não inserido' }}</div>
-        </div>
-        <div class="row">
-          <div class="col-sm-4 text-muted">Telefone:</div>
-          <div class="col-sm-8">{{ contato.telefone|default_if_none:'Não inserido' }}</div>
-        </div>
-      </div>
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'comercial:contatos' %}">Contatos</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ contato.id }}</li>
+            </ol>
+        </nav>
     </div>
-  </div>
-
-  <div class="col-lg-4">
-    <div class="card shadow mb-4">
-      <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Status & Logísticas</h6>
-      </div>
-      <div class="card-body">
-        <div class="text-center mb-4">
-          <i class="fas fa-phone fa-3x text-gray-300"></i>
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Informações Gerais</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">Nome do Contato:</div>
+                        <div class="col-sm-8 font-weight-bold">{{ contato.nome|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">E-mail:</div>
+                        <div class="col-sm-8">{{ contato.email|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 text-muted">Telefone:</div>
+                        <div class="col-sm-8">{{ contato.telefone|default_if_none:'Não inserido' }}</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-            Criado em:
-            <span class="text-xs">{{ contato.created_at|date:"M d, Y" }}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-            Ultima atualização:
-            <span class="text-xs">{{ contato.updated_at|timesince }} atrás</span>
-          </li>
-        </ul>
-
-        <div class="mt-4">
-          <a href="{% url 'comercial:contato_edit' contato.id %}" class="btn btn-primary btn-block btn-icon-split mb-2">
-            <span class="text">Editar Contato</span>
-          </a>
-          <button type="button" class="btn btn-outline-danger btn-block" data-toggle="modal" data-target="#deleteModal">
-            Deletar Contato
-          </button>
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Status & Logísticas</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-phone fa-3x text-gray-300"></i>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            Criado em:
+                            <span class="text-xs">{{ contato.created_at|date:"M d, Y" }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            Ultima atualização:
+                            <span class="text-xs">{{ contato.updated_at|timesince }} atrás</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="{% url 'comercial:contato_edit' contato.id %}"
+                           class="btn btn-primary btn-block btn-icon-split mb-2">
+                            <span class="text">Editar Contato</span>
+                        </a>
+                        <button type="button"
+                                class="btn btn-outline-danger btn-block"
+                                data-toggle="modal"
+                                data-target="#deleteModal">Deletar Contato</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
-
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content border-bottom-danger">
-      <div class="modal-header">
-        <h5 class="modal-title text-gray-800 font-weight-bold" id="deleteModalLabel">Confirmar Exclusão</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <div class="mb-3">
-          <i class="fas fa-exclamation-triangle fa-3x text-warning"></i>
+    <div class="modal fade"
+         id="deleteModal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content border-bottom-danger">
+                <div class="modal-header">
+                    <h5 class="modal-title text-gray-800 font-weight-bold"
+                        id="deleteModalLabel">Confirmar Exclusão</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-exclamation-triangle fa-3x text-warning"></i>
+                    </div>
+                    <p>Você tem certeza que deseja excluir permanentemente o contato:</p>
+                    <h5 class="font-weight-bold text-danger">{{ contato.nome|default_if_none:'Não inserido' }}</h5>
+                    <p class="small text-muted">Esta ação não poderá ser desfeita.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <form action="{% url 'comercial:contato_delete' contato.id %}"
+                          method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                            <span class="text">Sim, Excluir</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <p>Você tem certeza que deseja excluir permanentemente o contato:</p>
-        <h5 class="font-weight-bold text-danger">{{ contato.nome|default_if_none:'Não inserido' }}</h5>
-        <p class="small text-muted">Esta ação não poderá ser desfeita.</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-
-        <form action="{% url 'comercial:contato_delete' contato.id %}" method="post">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger btn-icon-split">
-            <span class="icon text-white-50">
-              <i class="fas fa-trash"></i>
-            </span>
-            <span class="text">Sim, Excluir</span>
-          </button>
-        </form>
-      </div>
     </div>
-  </div>
-</div>
 {% endblock %}

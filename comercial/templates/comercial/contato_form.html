@@ -2,115 +2,111 @@
 {% load static %}
 {% load humanize %}
 {% load widget_tweaks %}
-
 {% block title %}
-  {% if form.instance.pk %}Editar Contato{% else %}Novo Contato{% endif %}
+    {% if form.instance.pk %}
+        Editar Contato
+    {% else %}
+        Novo Contato
+    {% endif %}
 {% endblock title %}
-
 {% block content %}
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <div class="d-flex align-items-center">
-    <h1 class="h3 mb-0 text-gray-800">
-      {% if form.instance.pk %}Editar Contato{% else %}Novo Contato{% endif %}
-    </h1>
-  </div>
-
-  <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item"><a href="{% url 'comercial:contatos' %}">Contatos</a></li>
-      {% if form.instance.pk %}
-        <li class="breadcrumb-item">{{ form.instance.id }}</li>
-        <li class="breadcrumb-item active">Editar</li>
-      {% else %}
-        <li class="breadcrumb-item active">Novo</li>
-      {% endif %}
-    </ol>
-  </nav>
-</div>
-
-<form method="post" novalidate>
-  {% csrf_token %}
-  <div class="row">
-    <div class="col-lg-8">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Informações Básicas</h6>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center">
+            <h1 class="h3 mb-0 text-gray-800">
+                {% if form.instance.pk %}
+                    Editar Contato
+                {% else %}
+                    Novo Contato
+                {% endif %}
+            </h1>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-12 form-group mb-3">
-              <label for="{{ form.nome.id_for_label }}" class="text-muted small font-weight-bold">Nome do Contato*</label>
-              {% render_field form.nome|add_error_class:"is-invalid" %}
-              {% if form.nome.errors %}
-                {% for error in form.nome.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 form-group mb-3">
-              <label for="{{ form.email.id_for_label }}" class="text-muted small font-weight-bold">E-mail</label>
-              {% render_field form.email|add_error_class:"is-invalid" %}
-              {% if form.email.errors %}
-                {% for error in form.email.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <div class="col-md-6 form-group mb-3">
-              <label for="{{ form.telefone.id_for_label }}" class="text-muted small font-weight-bold">Telefone</label>
-              {% render_field form.telefone|add_error_class:"is-invalid" %}
-              {% if form.telefone.errors %}
-                {% for error in form.telefone.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'comercial:contatos' %}">Contatos</a>
+                </li>
+                {% if form.instance.pk %}
+                    <li class="breadcrumb-item">{{ form.instance.id }}</li>
+                    <li class="breadcrumb-item active">Editar</li>
+                {% else %}
+                    <li class="breadcrumb-item active">Novo</li>
+                {% endif %}
+            </ol>
+        </nav>
     </div>
-    <div class="col-lg-4">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Ações</h6>
-        </div>
-        <div class="card-body">
-          <button type="submit" class="btn btn-primary btn-block btn-icon-split mb-2">
-            <span class="text">Salvar Alterações</span>
-          </button>
-          
-          <a href="{% if form.instance.pk %}{% url 'comercial:contato_detail' form.instance.pk %}{% else %}{% url 'comercial:contatos' %}{% endif %}" 
-             class="btn btn-secondary btn-block">
-            Cancelar
-          </a>
-        </div>
-      </div>
-      
-      {% if form.instance.pk %}
-        <div class="card border-left-info shadow py-2">
-          <div class="card-body">
-            <div class="row no-gutters align-items-center">
-              <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Última Atualização</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800 small">
-                  {{ form.instance.updated_at|date:"d/m/Y H:i" }}
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Informações Básicas</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 form-group mb-3">
+                                <label for="{{ form.nome.id_for_label }}"
+                                       class="text-muted small font-weight-bold">Nome do Contato*</label>
+                                {% render_field form.nome|add_error_class:"is-invalid" %}
+                                {% if form.nome.errors %}
+                                    {% for error in form.nome.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.email.id_for_label }}"
+                                       class="text-muted small font-weight-bold">E-mail</label>
+                                {% render_field form.email|add_error_class:"is-invalid" %}
+                                {% if form.email.errors %}
+                                    {% for error in form.email.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.telefone.id_for_label }}"
+                                       class="text-muted small font-weight-bold">Telefone</label>
+                                {% render_field form.telefone|add_error_class:"is-invalid" %}
+                                {% if form.telefone.errors %}
+                                    {% for error in form.telefone.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="col-auto">
-                <i class="fas fa-history fa-2x text-gray-300"></i>
-              </div>
             </div>
-          </div>
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Ações</h6>
+                    </div>
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary btn-block btn-icon-split mb-2">
+                            <span class="text">Salvar Alterações</span>
+                        </button>
+                        <a href="{% if form.instance.pk %}{% url 'comercial:contato_detail' form.instance.pk %}{% else %}{% url 'comercial:contatos' %}{% endif %}"
+                           class="btn btn-secondary btn-block">Cancelar</a>
+                    </div>
+                </div>
+                {% if form.instance.pk %}
+                    <div class="card border-left-info shadow py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Última Atualização</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800 small">{{ form.instance.updated_at|date:"d/m/Y H:i" }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-history fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
         </div>
-      {% endif %}
-    </div>
-  </div>
-</form>
+    </form>
 {% endblock %}
-
 {% block extra_js %}
-  <script src="{% static 'js/masks.js' %}"></script>
-  <script src="{% static 'js/utils.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js"></script>
+    <script src="{% static 'js/masks.js' %}"></script>
 {% endblock extra_js %}

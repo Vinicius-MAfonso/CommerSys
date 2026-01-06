@@ -5,10 +5,8 @@ class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = [
-            "tipo_pessoa",
             "cpf_cnpj",
             "nome_razao_social",
-            "nome_fantasia",
             "inscricao_estadual",
             "indicador_ie",
             "email",
@@ -23,13 +21,11 @@ class ClienteForm(forms.ModelForm):
             "complemento",
         ]
         widgets = {
-            "tipo_pessoa": forms.Select(attrs={"class": "form-control"}),
-            "cpf_cnpj": forms.TextInput(attrs={"class": "form-control cpf_cnpj", "placeholder": "00.000.000-00",}),
+            "cpf_cnpj": forms.TextInput(attrs={"class": "form-control cpf_cnpj",}),
             "inscricao_estadual": forms.TextInput(
                 attrs={"class": "form-control ie", "placeholder": "000.000.000.000"}
             ),
             "nome_razao_social": forms.TextInput(attrs={"class": "form-control"}),
-            "nome_fantasia": forms.TextInput(attrs={"class": "form-control"}),
 
             "indicador_ie": forms.Select(attrs={"class": "form-control"}),
             "email": forms.TextInput(attrs={"class": "form-control"}),
