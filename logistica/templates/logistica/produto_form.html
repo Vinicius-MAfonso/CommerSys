@@ -86,6 +86,22 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.cest.id_for_label }}"
+                                       class="text-muted small font-weight-bold">CEST</label>
+                                {% render_field form.cest|add_error_class:"is-invalid" %}
+                                {% if form.cest.errors %}
+                                    <div class="text-danger small mt-1">{{ form.cest.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.cfop_padrao.id_for_label }}"
+                                       class="text-muted small font-weight-bold">CFOP Padrão*</label>
+                                {% render_field form.cfop_padrao|add_error_class:"is-invalid" %}
+                                {% if form.cfop_padrao.errors %}<div class="text-danger small mt-1">{{ form.cfop_padrao.errors.0 }}</div>{% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.unidade_medida.id_for_label }}"
                                        class="text-muted small font-weight-bold">Unidade de Medida*</label>
                                 {% render_field form.unidade_medida|add_error_class:"is-invalid" %}

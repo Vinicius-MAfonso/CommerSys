@@ -13,6 +13,8 @@ class Produto(models.Model):
     preco_base = models.DecimalField(max_digits=10, decimal_places=2)
 
     ncm = models.CharField(max_length=10)
+    cest = models.CharField(max_length=7, blank=True, null=True)
+    cfop_padrao = models.CharField(max_length=4, default="5102")
     unidade_medida = models.IntegerField(choices=MEDIDA_CHOICES, default=0)
     origem = models.IntegerField(choices=ORIGEM_CHOICES, default=0)
 
@@ -34,4 +36,4 @@ class Transportadora(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.razao_social
+        return self.nome

@@ -6,8 +6,25 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Contato, Cliente
-from .forms import ContatoForm, ClienteForm
+
+from .models import Contato, Cliente, Pedido
+from .forms import ContatoForm, ClienteForm, PedidoForm
+
+class PedidoListView(ListView):
+    model = Pedido
+    template_name = "comercial/pedido_list.html"
+    context_object_name = "pedidos"
+
+class PedidoDetailView(DetailView):
+    model = Pedido
+    template_name = "comercial/pedido_detail.html"
+    context_object_name = "pedido"
+
+class PedidoCreateView(CreateView):
+    model = Pedido
+    fields = ['cliente', 'transportadora', 'status']
+    template_name = "comercial/pedido_form.html"
+    success_url = reverse_lazy("comercial:pedidos")
 
 class ClienteListView(ListView):
     model = Cliente
@@ -42,7 +59,6 @@ class ClienteUpdateView(UpdateView):
 class ClienteDeleteView(DeleteView):
     model = Cliente
     success_url = reverse_lazy("comercial:clientes")
-
 
 class ContatoListView(ListView):
     model = Contato

@@ -5,7 +5,7 @@ from .models import Produto, Transportadora
 class ProdutoForm(forms.ModelForm):
     class Meta:
         model = Produto
-        fields = ["nome", "descricao", "preco_base", "ncm", "unidade_medida", "origem"]
+        fields = ["nome", "descricao", "preco_base", "ncm", "cest", "cfop_padrao", "unidade_medida", "origem"]
         widgets = {
             "nome": forms.TextInput(attrs={"class": "form-control"}),
             "descricao": forms.TextInput(attrs={"class": "form-control"}),
@@ -18,6 +18,12 @@ class ProdutoForm(forms.ModelForm):
             ),
             "ncm": forms.TextInput(
                 attrs={"class": "form-control ncm", "placeholder": "0000.00.00"}
+            ),
+            "cest": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),            
+            "cfop_padrao": forms.TextInput(
+                attrs={"class": "form-control"}
             ),
             "unidade_medida": forms.Select(attrs={"class": "form-control"}),
             "origem": forms.Select(attrs={"class": "form-control"}),

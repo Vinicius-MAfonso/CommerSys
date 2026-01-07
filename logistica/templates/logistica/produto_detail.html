@@ -45,6 +45,14 @@
                         <div class="col-sm-8">{{ produto.ncm|default_if_none:'Não inserido' }}</div>
                     </div>
                     <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">CEST:</div>
+                        <div class="col-sm-8">{{ produto.cest|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-4 text-muted">CFOP Padrão:</div>
+                        <div class="col-sm-8">{{ produto.cfop_padrao|default_if_none:'Não inserido' }}</div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-sm-4 text-muted">Unidade de Medida:</div>
                         <div class="col-sm-8">{{ produto.get_unidade_medida_display|default_if_none:'Não inserido' }}</div>
                     </div>
