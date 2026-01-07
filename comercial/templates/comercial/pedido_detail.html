@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Detalhes do Pedido #{{ pedido.id }}{% endblock %}
+
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Pedido #{{ pedido.id }}</h1>
+    <div>
+        <a href="{% url 'comercial:pedidos' %}" class="btn btn-sm btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm"></i> Voltar
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Cliente</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pedido.cliente.nome_razao_social }}</div>
+                <div class="mt-2 small text-muted">
+                    CPF/CNPJ: {{ pedido.cliente.cpf_cnpj }}<br>
+                    Cidade: {{ pedido.cliente.municipio }} - {{ pedido.cliente.uf }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Status NF-e</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pedido.get_nfe_status_display }}</div>
+                {% if pedido.nfe_numero %}
+                    <div class="mt-2 small text-muted">Nº: {{ pedido.nfe_numero }} | Série: {{ pedido.nfe_serie }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Valor Total</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">R$ {{ pedido.valor_total|floatformat:2|intcomma }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Produtos do Pedido</h6>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Qtd</th>
+                    <th>Preço Unit.</th>
+                    <th>CFOP</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pedido.itens.all %}
+                <tr>
+                    <td>{{ item.produto.nome }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>R$ {{ item.preco_unitario|floatformat:2|intcomma }}</td>
+                    <td>{{ item.cfop }}</td>
+                    <td>R$ {{ item.icms_base_calculo|floatformat:2|intcomma }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Transporte e Logística</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <p><strong>Transportadora:</strong> {{ pedido.transportadora.nome|default:"-" }}</p>
+                <p><strong>Modalidade Frete:</strong> {{ pedido.get_modalidade_frete_display }}</p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Peso Bruto:</strong> {{ pedido.peso_bruto }} kg</p>
+                <p><strong>Peso Líquido:</strong> {{ pedido.peso_liquido }} kg</p>
+            </div>
+            <div class="col-md-4">
+                <p><strong>Volumes:</strong> {{ pedido.quantidade_volumes }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,36 +3,6 @@ from django.forms import inlineformset_factory
 from .models import Contato, Cliente, Pedido, ItemPedido
 
 
-class PedidoForm(forms.ModelForm):
-    class Meta:
-        model = Pedido
-        fields = [
-            "cliente",
-            "transportadora",
-            "natureza_operacao",
-            "meio_pagamento",
-            "modalidade_frete",
-            "peso_bruto",
-            "peso_liquido",
-            "quantidade_volumes",
-        ]
-        widgets = {
-            "cliente": forms.Select(attrs={"class": "form-control select2"}),
-            "transportadora": forms.Select(attrs={"class": "form-control select2"}),
-            "data_pedido": forms.DateTimeInput(attrs={"class": "form-control"}),
-            "natureza_operacao": forms.TextInput(attrs={"class": "form-control"}),
-            "meio_pagamento": forms.Select(attrs={"class": "form-control"}),
-            "modalidade_frete": forms.Select(attrs={"class": "form-control"}),
-            "peso_bruto": forms.TextInput(
-                attrs={"class": "form-control decimal", "placeholder": "0,000"}
-            ),
-            "peso_liquido": forms.TextInput(
-                attrs={"class": "form-control decimal", "placeholder": "0,000"}
-            ),
-            "quantidade_volumes": forms.NumberInput(attrs={"class": "form-control"}),
-        }
-
-
 class ItemPedidoForm(forms.ModelForm):
     class Meta:
         model = ItemPedido
@@ -67,8 +37,37 @@ class ItemPedidoForm(forms.ModelForm):
 
 
 ItemPedidoFormSet = inlineformset_factory(
-    Pedido, ItemPedido, form=ItemPedidoForm, extra=1, can_delete=True
+    Pedido, ItemPedido, form=ItemPedidoForm, extra=0, can_delete=True
 )
+
+
+class PedidoForm(forms.ModelForm):
+    class Meta:
+        model = Pedido
+        fields = [
+            "cliente",
+            "transportadora",
+            "data_pedido",
+            "natureza_operacao",
+            "meio_pagamento",
+            "modalidade_frete",
+            "peso_bruto",
+            "peso_liquido",
+            "quantidade_volumes",
+        ]
+        widgets = {
+            "cliente": forms.Select(attrs={"class": "form-control select2"}),
+            "transportadora": forms.Select(attrs={"class": "form-control select2"}),
+            "data_pedido": forms.DateTimeInput(
+                attrs={"class": "form-control", "type": "datetime-local"}
+            ),
+            "natureza_operacao": forms.TextInput(attrs={"class": "form-control"}),
+            "meio_pagamento": forms.Select(attrs={"class": "form-control"}),
+            "modalidade_frete": forms.Select(attrs={"class": "form-control"}),
+            "peso_bruto": forms.TextInput(attrs={"class": "form-control decimal"}),
+            "peso_liquido": forms.TextInput(attrs={"class": "form-control decimal"}),
+            "quantidade_volumes": forms.NumberInput(attrs={"class": "form-control"}),
+        }
 
 
 class ClienteForm(forms.ModelForm):

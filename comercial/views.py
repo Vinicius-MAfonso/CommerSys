@@ -6,9 +6,9 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-
+from django.db import transaction
 from .models import Contato, Cliente, Pedido
-from .forms import ContatoForm, ClienteForm, PedidoForm
+from .forms import ContatoForm, ClienteForm, PedidoForm, ItemPedidoFormSet
 
 class PedidoListView(ListView):
     model = Pedido
@@ -22,9 +22,32 @@ class PedidoDetailView(DetailView):
 
 class PedidoCreateView(CreateView):
     model = Pedido
-    fields = ['cliente', 'transportadora', 'status']
+    form_class = PedidoForm
     template_name = "comercial/pedido_form.html"
     success_url = reverse_lazy("comercial:pedidos")
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['itens'] = ItemPedidoFormSet(self.request.POST)
+        else:
+            data['itens'] = ItemPedidoFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        itens = context['itens']
+        with transaction.atomic():
+            self.object = form.save()
+            if itens.is_valid():
+                itens.instance = self.object
+                itens.save()
+            else:
+                return self.form_invalid(form)
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
 
 class ClienteListView(ListView):
     model = Cliente

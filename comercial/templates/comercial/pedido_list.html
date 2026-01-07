@@ -1,68 +1,68 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-{% block title %}
-    Pedidos
-{% endblock title %}
+
+{% block title %}Pedidos{% endblock %}
+
 {% block extra_css %}
-    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css"
-          rel="stylesheet" />
-{% endblock extra_css %}
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
-    <div class="d-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Pedidos</h1>
-        <a href="{% url 'comercial:pedido_create' %}"
-           class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus fa-sm text-white-50"></i>
-            <span class="d-none d-sm-inline">Adicionar Pedido</span>
-        </a>
+<div class="d-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Pedidos</h1>
+    <a href="{% url 'comercial:pedido_create' %}" class="btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus fa-sm text-white-50"></i> Novo Pedido
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Listagem de Pedidos</h6>
     </div>
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Listagem de Pedidos</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover"
-                       id="dataTable"
-                       width="100%"
-                       cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Nº</th>
-                            <th>Cliente</th>
-                            <th>Data</th>
-                            <th>Status NF-e</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for pedido in pedidos %}
-                            <tr data-bs-detail="{% url 'comercial:pedido_detail' pedido.id %}"
-                                style="cursor: pointer">
-                                <td>{{ pedido.id }}</td>
-                                <td>{{ pedido.cliente.nome_razao_social }}</td>
-                                <td>{{ pedido.data_pedido|date:"d/m/Y H:i" }}</td>
-                                <td>
-                                    <span class="badge {% if pedido.nfe_status == 'autorizada' %}badge-success{% elif pedido.nfe_status == 'rejeitada' %}badge-danger{% else %}badge-warning{% endif %}">
-                                        {{ pedido.get_nfe_status_display }}
-                                    </span>
-                                </td>
-                                <td>R$ {{ pedido.valor_total|floatformat:2|intcomma }}</td>
-                            </tr>
-                        {% empty %}
-                            <tr>
-                                <td colspan="5" class="text-center text-muted py-4">Nenhum pedido cadastrado.</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Nº Pedido</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Status NF-e</th>
+                        <th>Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedido in pedidos %}
+                    <tr data-bs-detail="{% url 'comercial:pedido_detail' pedido.id %}" style="cursor: pointer">
+                        <td>{{ pedido.id }}</td>
+                        <td>{{ pedido.cliente.nome_razao_social }}</td>
+                        <td>{{ pedido.data_pedido|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            {% if pedido.nfe_status == 'autorizada' %}
+                                <span class="badge badge-success">Autorizada</span>
+                            {% elif pedido.nfe_status == 'pendente' %}
+                                <span class="badge badge-warning">Pendente</span>
+                            {% else %}
+                                <span class="badge badge-danger">{{ pedido.get_nfe_status_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td>R$ {{ pedido.valor_total|floatformat:2|intcomma }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">Nenhum pedido encontrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-{% endblock content %}
+</div>
+{% endblock %}
+
 {% block extra_js %}
     <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
     <script src="{% static 'js/datatable.js' %}"></script>
-{% endblock extra_js %}
+{% endblock %}
