@@ -1,84 +1,67 @@
-function capitilize(string) {
-  return string
-    .toLowerCase()
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
+const fillFields = (data, mapping) => {
+  Object.entries(mapping).forEach(([htmlId, apiKey]) => {
+    const element = document.getElementById(htmlId);
+    if (element) element.value = data[apiKey] || "";
+  });
+};
 
-document
-  .getElementById("btnCnpj")
-  .addEventListener("click", async function (event) {
-    const cnpjLimpo = document
-      .getElementById("id_cpf_cnpj")
-      .value.replace(/\D/g, "");
+const btn_cnpj = document.getElementById("btnCnpj");
+if (btn_cnpj) {
+  btn_cnpj.addEventListener("click", async () => {
+    const input = document.querySelector("#id_cpf_cnpj, #id_cnpj");
+    const cnpjLimpo = input.value.replace(/\D/g, "");
 
-    if (cnpjLimpo.length !== 14) {
-      return;
-    }
+    if (cnpjLimpo.length !== 14) return alert("CNPJ Inválido");
 
     try {
-      const response = await fetch(
-        `https://brasilapi.com.br/api/cnpj/v1/${cnpjLimpo}`
-      );
-
-      if (!response.ok) {
-        throw new Error("CNPJ não encontrado");
-      }
+      btn_cnpj.disabled = true; 
+      const response = await fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpjLimpo}`);
+      
+      if (!response.ok) throw new Error("CNPJ não encontrado");
 
       const data = await response.json();
-      let elements = {
+      fillFields(data, {
         id_nome_razao_social: "razao_social",
         id_telefone: "ddd_telefone_1",
         id_email: "email",
         id_cep: "cep",
-      };
-      Object.entries(elements).forEach(([key, value]) => {
-        const html_element = document.getElementById(key);
-        if (html_element) {
-          html_element.value = data[value];
-        }
       });
     } catch (error) {
-      console.error("Erro na consulta:", error);
+      alert("Erro ao buscar CNPJ, tente mais tarde.");
+      console.log(error.message);
+    } finally {
+      btn_cnpj.disabled = false;
     }
   });
+}
 
-document
-  .getElementById("btnCep")
-  .addEventListener("click", async function (event) {
-    const cepLimpo = document
-      .getElementById("id_cep")
-      .value.replace(/\D/g, "");
+const btn_cep = document.getElementById("btnCep");
+if (btn_cep) {
+  btn_cep.addEventListener("click", async () => {
+    const input = document.getElementById("id_cep");
+    const cepLimpo = input.value.replace(/\D/g, "");
 
-    if (cepLimpo.length !== 8) {
-      return;
-    }
-    
+    if (cepLimpo.length !== 8) return alert("CEP Inválido");
+
     try {
-      const response = await fetch(
-        `https://viacep.com.br/ws/${cepLimpo}/json/`
-      );
-
-      if (!response.ok) {
-        throw new Error("CEP não encontrado");
-      }
-
+      btn_cep.disabled = true;
+      const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
       const data = await response.json();
-      let elements = {
+
+      if (data.erro) throw new Error("CEP não encontrado.");
+
+      fillFields(data, {
         id_uf: "uf",
         id_municipio: "localidade",
         id_codigo_municipio: "ibge",
         id_bairro: "bairro",
         id_logradouro: "logradouro",
-      };
-      Object.entries(elements).forEach(([key, value]) => {
-        const html_element = document.getElementById(key);
-        if (html_element) {
-          html_element.value = data[value];
-        }
       });
     } catch (error) {
-      console.error("Erro na consulta:", error);
+      alert("Erro ao buscar CEP, tente mais tarde.");
+      console.log(error.message);
+    } finally {
+      btn_cep.disabled = false;
     }
   });
+}

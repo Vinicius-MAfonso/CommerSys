@@ -46,6 +46,7 @@ class PedidoForm(forms.ModelForm):
         model = Pedido
         fields = [
             "cliente",
+            "contato",
             "transportadora",
             "data_pedido",
             "natureza_operacao",
@@ -57,6 +58,7 @@ class PedidoForm(forms.ModelForm):
         ]
         widgets = {
             "cliente": forms.Select(attrs={"class": "form-control select2"}),
+            "contato": forms.Select(attrs={"class": "form-control select2"}),
             "transportadora": forms.Select(attrs={"class": "form-control select2"}),
             "data_pedido": forms.DateTimeInput(
                 attrs={"class": "form-control", "type": "datetime-local"}

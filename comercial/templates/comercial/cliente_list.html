@@ -42,10 +42,6 @@
                                 <td>{{ cliente.email|default_if_none:'Não inserido' }}</td>
                                 <td>{{ cliente.telefone|default_if_none:'Não inserido' }}</td>
                             </tr>
-                        {% empty %}
-                            <tr>
-                                <td colspan="4" class="text-center text-muted py-4">Nenhum cliente cadastrado.</td>
-                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>

@@ -44,10 +44,6 @@
                                 <td>{{ transportadora.email|default_if_none:'Não inserido' }}</td>
                                 <td>{{ transportadora.telefone|default_if_none:'Não inserido' }}</td>
                             </tr>
-                        {% empty %}
-                            <tr>
-                                <td colspan="4" class="text-center text-muted py-4">Nenhuma transportadora cadastrada.</td>
-                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>

@@ -1,93 +1,446 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% load widget_tweaks %}
 
-{% block title %}Novo Pedido{% endblock %}
+{% block title %}
+    {% if form.instance.pk %}
+        Editar Pedido
+    {% else %}
+        Novo Pedido
+    {% endif %}
+{% endblock title %}
 
 {% block content %}
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Novo Pedido</h1>
-</div>
-
-<form method="post">
-    {% csrf_token %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Dados Gerais</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Cliente</label>
-                            {% render_field form.cliente class+="form-control" %}
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Transportadora</label>
-                            {% render_field form.transportadora class+="form-control" %}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 form-group">
-                            <label>Meio Pagamento</label>
-                            {% render_field form.meio_pagamento class+="form-control" %}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label>Frete</label>
-                            {% render_field form.modalidade_frete class+="form-control" %}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label>Peso Bruto</label>
-                            {% render_field form.peso_bruto class+="form-control" %}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label>Volumes</label>
-                            {% render_field form.quantidade_volumes class+="form-control" %}
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center">
+            <h1 class="h3 mb-0 text-gray-800">
+                {% if form.instance.pk %}
+                    Editar Pedido #{{ form.instance.id }}
+                {% else %}
+                    Novo Pedido
+                {% endif %}
+            </h1>
         </div>
-
-        <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Itens</h6>
-                </div>
-                <div class="card-body">
-                    {{ itens.management_form }}
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Produto</th>
-                                    <th width="100">Qtd</th>
-                                    <th width="150">Vlr. Unitário</th>
-                                    <th width="100">CFOP</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for item_form in itens %}
-                                    <tr>
-                                        <td>{% render_field item_form.produto class+="form-control" %}</td>
-                                        <td>{% render_field item_form.quantidade class+="form-control" %}</td>
-                                        <td>{% render_field item_form.preco_unitario class+="form-control" %}</td>
-                                        <td>{% render_field item_form.cfop class+="form-control" %}</td>
-                                        <td>{% if item_form.instance.pk %}{{ item_form.DELETE }}{% endif %}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12 mb-4">
-            <button type="submit" class="btn btn-primary px-5 shadow">Salvar Pedido</button>
-            <a href="{% url 'comercial:pedidos' %}" class="btn btn-secondary px-5 ml-2">Cancelar</a>
-        </div>
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'comercial:pedidos' %}">Pedidos</a>
+                </li>
+                {% if form.instance.pk %}
+                    <li class="breadcrumb-item">{{ form.instance.id }}</li>
+                    <li class="breadcrumb-item active">Editar</li>
+                {% else %}
+                    <li class="breadcrumb-item active">Novo</li>
+                {% endif %}
+            </ol>
+        </nav>
     </div>
-</form>
+
+    <form method="post" novalidate id="pedidoForm">
+        {% csrf_token %}
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            Informações do Pedido
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.cliente.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Cliente*</label>
+                                {% render_field form.cliente class="form-control" %}
+                                {% if form.cliente.errors %}
+                                    {% for error in form.cliente.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.contato.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Contato</label>
+                                {% render_field form.contato class="form-control" %}
+                                {% if form.contato.errors %}
+                                    {% for error in form.contato.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.data_pedido.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Data do Pedido*</label>
+                                {% render_field form.data_pedido class="form-control" type="datetime-local" %}
+                                {% if form.data_pedido.errors %}
+                                    {% for error in form.data_pedido.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.natureza_operacao.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Natureza da Operação*</label>
+                                {% render_field form.natureza_operacao class="form-control" placeholder="Venda de Mercadoria" %}
+                                {% if form.natureza_operacao.errors %}
+                                    {% for error in form.natureza_operacao.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.meio_pagamento.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Meio de Pagamento*</label>
+                                {% render_field form.meio_pagamento class="form-control" %}
+                                {% if form.meio_pagamento.errors %}
+                                    {% for error in form.meio_pagamento.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.transportadora.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Transportadora</label>
+                                {% render_field form.transportadora class="form-control" %}
+                                {% if form.transportadora.errors %}
+                                    {% for error in form.transportadora.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            Informações de Frete
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.modalidade_frete.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Modalidade do Frete*</label>
+                                {% render_field form.modalidade_frete class="form-control" %}
+                                {% if form.modalidade_frete.errors %}
+                                    {% for error in form.modalidade_frete.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.quantidade_volumes.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Qtd. Volumes*</label>
+                                {% render_field form.quantidade_volumes class="form-control" type="number" min="1" %}
+                                {% if form.quantidade_volumes.errors %}
+                                    {% for error in form.quantidade_volumes.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.peso_bruto.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Peso Bruto (kg)*</label>
+                                {% render_field form.peso_bruto class="form-control peso-mask" placeholder="0,000" %}
+                                {% if form.peso_bruto.errors %}
+                                    {% for error in form.peso_bruto.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.peso_liquido.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Peso Líquido (kg)*</label>
+                                {% render_field form.peso_liquido class="form-control peso-mask" placeholder="0,000" %}
+                                {% if form.peso_liquido.errors %}
+                                    {% for error in form.peso_liquido.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            Itens do Pedido
+                        </h6>
+                        <button type="button" class="btn btn-sm btn-success" id="addItemBtn">
+                            <i class="fas fa-plus mr-1"></i>Adicionar Item
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="items-container">
+                        </div>
+                        <div class="alert alert-info mt-3" id="no-items-msg">
+                            <i class="fas fa-info-circle mr-2"></i>Clique em "Adicionar Item" para incluir produtos ao pedido.
+                        </div>
+                        <div class="mt-4 pt-3 border-top">
+                            <div class="row">
+                                <div class="col-md-6 ml-auto">
+                                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                        <span class="h5 mb-0 font-weight-bold text-primary">Valor Total:</span>
+                                        <span class="h4 mb-0 font-weight-bold text-primary" id="total-value">R$ 0,00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if form.instance.pk %}
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                <i class="fas fa-file-alt mr-2"></i>Informações da NF-e
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 form-group mb-3">
+                                    <label for="{{ form.nfe_status.id_for_label }}" 
+                                           class="text-muted small font-weight-bold">Status NF-e</label>
+                                    {% render_field form.nfe_status class="form-control" %}
+                                    {% if form.nfe_status.errors %}
+                                        {% for error in form.nfe_status.errors %}
+                                            <div class="text-danger small mt-1">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 form-group mb-3">
+                                    <label for="{{ form.nfe_numero.id_for_label }}" 
+                                           class="text-muted small font-weight-bold">Número NF-e</label>
+                                    {% render_field form.nfe_numero class="form-control" type="number" %}
+                                    {% if form.nfe_numero.errors %}
+                                        {% for error in form.nfe_numero.errors %}
+                                            <div class="text-danger small mt-1">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 form-group mb-3">
+                                    <label for="{{ form.nfe_serie.id_for_label }}" 
+                                           class="text-muted small font-weight-bold">Série</label>
+                                    {% render_field form.nfe_serie class="form-control" type="number" %}
+                                    {% if form.nfe_serie.errors %}
+                                        {% for error in form.nfe_serie.errors %}
+                                            <div class="text-danger small mt-1">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 form-group mb-3">
+                                    <label for="{{ form.nfe_chave.id_for_label }}" 
+                                           class="text-muted small font-weight-bold">Chave de Acesso</label>
+                                    {% render_field form.nfe_chave class="form-control" readonly="" %}
+                                    {% if form.nfe_chave.errors %}
+                                        {% for error in form.nfe_chave.errors %}
+                                            <div class="text-danger small mt-1">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 form-group mb-3">
+                                    <label for="{{ form.nfe_protocolo.id_for_label }}" 
+                                           class="text-muted small font-weight-bold">Protocolo</label>
+                                    {% render_field form.nfe_protocolo class="form-control" readonly="" %}
+                                    {% if form.nfe_protocolo.errors %}
+                                        {% for error in form.nfe_protocolo.errors %}
+                                            <div class="text-danger small mt-1">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if form.instance.nfe_motivo_rejeicao %}
+                                <div class="row">
+                                    <div class="col-md-12 form-group mb-3">
+                                        <label class="text-muted small font-weight-bold">Motivo da Rejeição</label>
+                                        <div class="alert alert-danger mb-0">
+                                            {{ form.instance.nfe_motivo_rejeicao }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Ações</h6>
+                    </div>
+                    <div class="card-body">
+                        <button type="submit" class="btn btn-primary btn-block btn-icon-split mb-2">
+                            <span class="text">Salvar Pedido</span>
+                        </button>
+                        <a href="{% if form.instance.pk %}{% url 'comercial:pedido_detail' form.instance.pk %}{% else %}{% url 'comercial:pedidos' %}{% endif %}" 
+                           class="btn btn-secondary btn-block">
+                            Cancelar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card border-left-primary shadow mb-4">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center mb-3">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total de Itens
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="total-items">0</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-box fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Valor Total
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="valor-total-card">R$ 0,00</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if form.instance.pk %}
+                    <div class="card border-left-{% if form.instance.nfe_status == 'autorizada' %}success{% elif form.instance.nfe_status == 'rejeitada' %}danger{% elif form.instance.nfe_status == 'cancelada' %}warning{% else %}info{% endif %} shadow mb-4">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                        Status NF-e
+                                    </div>
+                                    <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                        {{ form.instance.get_nfe_status_display }}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-file-invoice fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-left-info shadow mb-4">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center mb-3">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                        Data de Criação
+                                    </div>
+                                    <div class="small font-weight-bold text-gray-800">
+                                        {{ form.instance.data_pedido|date:"d/m/Y H:i" }}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="card border-left-warning shadow">
+                    <div class="card-body">
+                        <h6 class="font-weight-bold text-warning mb-3">
+                            <i class="fas fa-lightbulb mr-2"></i>Dicas
+                        </h6>
+                        <ul class="small mb-0 pl-3">
+                            <li class="mb-2">Campos marcados com * são obrigatórios</li>
+                            <li class="mb-2">Preencha os dados fiscais corretamente</li>
+                            <li class="mb-2">Configure CFOP e ICMS para cada item</li>
+                            <li>Verifique os pesos antes de salvar</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <template id="item-template">
+        <div class="card mb-3 item-card" data-item-index="">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="m-0 font-weight-bold text-secondary">
+                        <i class="fas fa-box mr-2"></i>Item <span class="item-number"></span>
+                    </h6>
+                    <button type="button" class="btn btn-sm btn-danger remove-item-btn">
+                        <i class="fas fa-trash"></i> Remover
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group mb-3">
+                        <label class="text-muted small font-weight-bold">Produto*</label>
+                        <select class="form-control item-produto" name="items[INDEX][produto]" required>
+                            <option value="">Selecione um produto...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group mb-3">
+                        <label class="text-muted small font-weight-bold">Quantidade*</label>
+                        <input type="number" class="form-control item-quantidade" name="items[INDEX][quantidade]" 
+                               min="1" value="1" required>
+                    </div>
+                    <div class="col-md-6 form-group mb-3">
+                        <label class="text-muted small font-weight-bold">Preço Unitário*</label>
+                        <input type="text" class="form-control item-preco money-mask" name="items[INDEX][preco_unitario]" 
+                               value="0,00" required>
+                    </div>
+                </div>
+                <div class="border-top pt-3 mt-2">
+                    <h6 class="text-muted small font-weight-bold mb-3">
+                        <i class="fas fa-receipt mr-2"></i>Informações Fiscais
+                    </h6>
+                    <div class="row">
+                        <div class="col-md-4 form-group mb-3">
+                            <label class="text-muted small font-weight-bold">CFOP*</label>
+                            <input type="text" class="form-control item-cfop" name="items[INDEX][cfop]" 
+                                   placeholder="5102" maxlength="4" required>
+                        </div>
+                        <div class="col-md-4 form-group mb-3">
+                            <label class="text-muted small font-weight-bold">ICMS CST*</label>
+                            <input type="text" class="form-control item-icms-cst" name="items[INDEX][icms_cst]" 
+                                   placeholder="101" maxlength="3" value="101" required>
+                        </div>
+                        <div class="col-md-4 form-group mb-3">
+                            <label class="text-muted small font-weight-bold">ICMS Alíquota (%)</label>
+                            <input type="text" class="form-control item-icms-aliquota percent-mask" 
+                                   name="items[INDEX][icms_aliquota]" value="0,00">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-3">
+                            <label class="text-muted small font-weight-bold">ICMS Base de Cálculo</label>
+                            <input type="text" class="form-control item-icms-base money-mask" 
+                                   name="items[INDEX][icms_base_calculo]" value="0,00">
+                        </div>
+                        <div class="col-md-6 form-group mb-3">
+                            <label class="text-muted small font-weight-bold">Subtotal</label>
+                            <input type="text" class="form-control item-subtotal bg-light" readonly value="R$ 0,00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 {% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.9/jquery.inputmask.min.js"></script>
+    <script src="{% static 'js/masks.js' %}"></script>
+{% endblock extra_js %}

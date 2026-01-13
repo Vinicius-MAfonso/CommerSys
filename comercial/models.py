@@ -32,7 +32,7 @@ class Cliente(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.nome_razao_social} ({self.cpf_cnpj})"
+        return self.nome_razao_social
 
 
 class Contato(models.Model):
@@ -72,6 +72,9 @@ class Pedido(models.Model):
     ]
 
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    contato = models.ForeignKey(
+        Contato, on_delete=models.SET_NULL, null=True, blank=True
+    )
     transportadora = models.ForeignKey(
         Transportadora, on_delete=models.SET_NULL, null=True, blank=True
     )

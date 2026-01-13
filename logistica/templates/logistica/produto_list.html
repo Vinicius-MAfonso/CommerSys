@@ -42,10 +42,6 @@
                                 <td>{{ produto.descricao|default_if_none:'Não inserido'|truncatechars:50 }}</td>
                                 <td>R$ {{ produto.preco_base|default_if_none:'Não inserido'|intcomma }}</td>
                             </tr>
-                        {% empty %}
-                            <tr>
-                                <td colspan="3" class="text-center text-muted py-4">Nenhum produto cadastrado.</td>
-                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
