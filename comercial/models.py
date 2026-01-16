@@ -86,8 +86,8 @@ class Pedido(models.Model):
     )
 
     modalidade_frete = models.IntegerField(choices=TIPO_FRETE_CHOICES, default=9)
-    peso_bruto = models.DecimalField(max_digits=10, decimal_places=3, default=0.000)
-    peso_liquido = models.DecimalField(max_digits=10, decimal_places=3, default=0.000)
+    peso_bruto = models.DecimalField(max_digits=10, decimal_places=3)
+    peso_liquido = models.DecimalField(max_digits=10, decimal_places=3)
     quantidade_volumes = models.IntegerField(default=1)
 
     nfe_status = models.CharField(
@@ -115,9 +115,9 @@ class ItemPedido(models.Model):
     icms_cst = models.CharField(
         max_length=3, default="101"
     )
-    icms_aliquota = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    icms_aliquota = models.DecimalField(max_digits=5, decimal_places=2)
     icms_base_calculo = models.DecimalField(
-        max_digits=10, decimal_places=2, default=0.00
+        max_digits=10, decimal_places=2
     )
 
     def __str__(self):

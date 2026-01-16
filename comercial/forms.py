@@ -66,8 +66,8 @@ class PedidoForm(forms.ModelForm):
             "natureza_operacao": forms.TextInput(attrs={"class": "form-control"}),
             "meio_pagamento": forms.Select(attrs={"class": "form-control"}),
             "modalidade_frete": forms.Select(attrs={"class": "form-control"}),
-            "peso_bruto": forms.TextInput(attrs={"class": "form-control decimal"}),
-            "peso_liquido": forms.TextInput(attrs={"class": "form-control decimal"}),
+            "peso_bruto": forms.TextInput(attrs={"class": "form-control weight"}),
+            "peso_liquido": forms.TextInput(attrs={"class": "form-control weight"}),
             "quantidade_volumes": forms.NumberInput(attrs={"class": "form-control"}),
         }
 

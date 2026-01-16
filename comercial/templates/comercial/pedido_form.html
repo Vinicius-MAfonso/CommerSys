@@ -39,7 +39,6 @@
 
     <form method="post" novalidate id="pedidoForm">
         {% csrf_token %}
-        
         <div class="row">
             <div class="col-lg-8">
                 <div class="card shadow mb-4">
@@ -53,7 +52,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.cliente.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Cliente*</label>
-                                {% render_field form.cliente class="form-control" %}
+                                {% render_field form.cliente|add_error_class:"is-invalid" %}
                                 {% if form.cliente.errors %}
                                     {% for error in form.cliente.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -63,7 +62,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.contato.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Contato</label>
-                                {% render_field form.contato class="form-control" %}
+                                {% render_field form.contato|add_error_class:"is-invalid" %}
                                 {% if form.contato.errors %}
                                     {% for error in form.contato.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -75,7 +74,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.data_pedido.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Data do Pedido*</label>
-                                {% render_field form.data_pedido class="form-control" type="datetime-local" %}
+                                {% render_field form.data_pedido|add_error_class:"is-invalid" %}
                                 {% if form.data_pedido.errors %}
                                     {% for error in form.data_pedido.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -85,7 +84,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.natureza_operacao.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Natureza da Operação*</label>
-                                {% render_field form.natureza_operacao class="form-control" placeholder="Venda de Mercadoria" %}
+                                {% render_field form.natureza_operacao|add_error_class:"is-invalid" %}
                                 {% if form.natureza_operacao.errors %}
                                     {% for error in form.natureza_operacao.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -97,7 +96,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.meio_pagamento.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Meio de Pagamento*</label>
-                                {% render_field form.meio_pagamento class="form-control" %}
+                                {% render_field form.meio_pagamento|add_error_class:"is-invalid" %}
                                 {% if form.meio_pagamento.errors %}
                                     {% for error in form.meio_pagamento.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -107,7 +106,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.transportadora.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Transportadora</label>
-                                {% render_field form.transportadora class="form-control" %}
+                                {% render_field form.transportadora|add_error_class:"is-invalid" %}
                                 {% if form.transportadora.errors %}
                                     {% for error in form.transportadora.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -128,7 +127,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.modalidade_frete.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Modalidade do Frete*</label>
-                                {% render_field form.modalidade_frete class="form-control" %}
+                                {% render_field form.modalidade_frete|add_error_class:"is-invalid" %}
                                 {% if form.modalidade_frete.errors %}
                                     {% for error in form.modalidade_frete.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -138,7 +137,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.quantidade_volumes.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Qtd. Volumes*</label>
-                                {% render_field form.quantidade_volumes class="form-control" type="number" min="1" %}
+                                {% render_field form.quantidade_volumes|add_error_class:"is-invalid" %}
                                 {% if form.quantidade_volumes.errors %}
                                     {% for error in form.quantidade_volumes.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -150,7 +149,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.peso_bruto.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Peso Bruto (kg)*</label>
-                                {% render_field form.peso_bruto class="form-control peso-mask" placeholder="0,000" %}
+                                {% render_field form.peso_bruto|add_error_class:"is-invalid" %}
                                 {% if form.peso_bruto.errors %}
                                     {% for error in form.peso_bruto.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -160,7 +159,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.peso_liquido.id_for_label }}" 
                                        class="text-muted small font-weight-bold">Peso Líquido (kg)*</label>
-                                {% render_field form.peso_liquido class="form-control peso-mask" placeholder="0,000" %}
+                                {% render_field form.peso_liquido|add_error_class:"is-invalid" %}
                                 {% if form.peso_liquido.errors %}
                                     {% for error in form.peso_liquido.errors %}
                                         <div class="text-danger small mt-1">{{ error }}</div>
@@ -209,7 +208,7 @@
                                 <div class="col-md-4 form-group mb-3">
                                     <label for="{{ form.nfe_status.id_for_label }}" 
                                            class="text-muted small font-weight-bold">Status NF-e</label>
-                                    {% render_field form.nfe_status class="form-control" %}
+                                    {% render_field form.nfe_status|add_error_class:"is-invalid" %}
                                     {% if form.nfe_status.errors %}
                                         {% for error in form.nfe_status.errors %}
                                             <div class="text-danger small mt-1">{{ error }}</div>
@@ -219,7 +218,7 @@
                                 <div class="col-md-4 form-group mb-3">
                                     <label for="{{ form.nfe_numero.id_for_label }}" 
                                            class="text-muted small font-weight-bold">Número NF-e</label>
-                                    {% render_field form.nfe_numero class="form-control" type="number" %}
+                                    {% render_field form.nfe_numero|add_error_class:"is-invalid" %}
                                     {% if form.nfe_numero.errors %}
                                         {% for error in form.nfe_numero.errors %}
                                             <div class="text-danger small mt-1">{{ error }}</div>
@@ -229,7 +228,7 @@
                                 <div class="col-md-4 form-group mb-3">
                                     <label for="{{ form.nfe_serie.id_for_label }}" 
                                            class="text-muted small font-weight-bold">Série</label>
-                                    {% render_field form.nfe_serie class="form-control" type="number" %}
+                                    {% render_field form.nfe_serie|add_error_class:"is-invalid" %}
                                     {% if form.nfe_serie.errors %}
                                         {% for error in form.nfe_serie.errors %}
                                             <div class="text-danger small mt-1">{{ error }}</div>
@@ -241,7 +240,7 @@
                                 <div class="col-md-12 form-group mb-3">
                                     <label for="{{ form.nfe_chave.id_for_label }}" 
                                            class="text-muted small font-weight-bold">Chave de Acesso</label>
-                                    {% render_field form.nfe_chave class="form-control" readonly="" %}
+                                    {% render_field form.nfe_chave|add_error_class:"is-invalid" %}
                                     {% if form.nfe_chave.errors %}
                                         {% for error in form.nfe_chave.errors %}
                                             <div class="text-danger small mt-1">{{ error }}</div>
@@ -253,7 +252,7 @@
                                 <div class="col-md-12 form-group mb-3">
                                     <label for="{{ form.nfe_protocolo.id_for_label }}" 
                                            class="text-muted small font-weight-bold">Protocolo</label>
-                                    {% render_field form.nfe_protocolo class="form-control" readonly="" %}
+                                    {% render_field form.nfe_protocolo|add_error_class:"is-invalid" %}
                                     {% if form.nfe_protocolo.errors %}
                                         {% for error in form.nfe_protocolo.errors %}
                                             <div class="text-danger small mt-1">{{ error }}</div>

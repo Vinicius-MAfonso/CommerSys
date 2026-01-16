@@ -59,3 +59,11 @@ $('.phone').inputmask({
     showMaskOnFocus: false, 
     clearMaskOnLostFocus: true,
 });
+
+$('.weight').inputmask({
+    mask: '9.999,999',
+    placeholder: "0",   
+    showMaskOnHover: false,
+    showMaskOnFocus: false, 
+    clearMaskOnLostFocus: true,
+});
