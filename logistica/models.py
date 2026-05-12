@@ -11,6 +11,7 @@ class Produto(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.CharField(max_length=100, blank=True, null=True)
     preco_base = models.DecimalField(max_digits=10, decimal_places=2)
+    peso_unitario = models.DecimalField(max_digits=10, decimal_places=3, default=0.000, verbose_name="Peso Unitário (kg)")
 
     ncm = models.CharField(max_length=10)
     cest = models.CharField(max_length=7, blank=True, null=True)

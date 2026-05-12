@@ -7,6 +7,7 @@ urlpatterns = [
     path('pedidos/', views.PedidoListView.as_view(), name='pedidos'),
     path('pedidos/novo/', views.PedidoCreateView.as_view(), name='pedido_create'),
     path('pedidos/<int:pk>/', views.PedidoDetailView.as_view(), name='pedido_detail'),
+    path('pedidos/<int:pk>/editar/', views.PedidoUpdateView.as_view(), name='pedido_edit'),
     path('clientes/', views.ClienteListView.as_view(), name='clientes'),
     path('clientes/novo/', views.ClienteCreateView.as_view(), name='cliente_create'),
     path('clientes/<int:pk>/', views.ClienteDetailView.as_view(), name='cliente_detail'),

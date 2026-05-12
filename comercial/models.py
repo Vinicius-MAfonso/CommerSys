@@ -89,6 +89,7 @@ class Pedido(models.Model):
     peso_bruto = models.DecimalField(max_digits=10, decimal_places=3)
     peso_liquido = models.DecimalField(max_digits=10, decimal_places=3)
     quantidade_volumes = models.IntegerField(default=1)
+    preco_frete = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name="Preço do Frete")
 
     nfe_status = models.CharField(
         max_length=20, choices=STATUS_NFE_CHOICES, default="pendente"
@@ -100,6 +101,11 @@ class Pedido(models.Model):
     nfe_motivo_rejeicao = models.TextField(blank=True, null=True)
 
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    @property
+    def valor_total_com_frete(self):
+        """Retorna o valor total incluindo o frete"""
+        return self.valor_total + self.preco_frete
 
     def __str__(self):
         return f"Pedido {self.id} - {self.cliente.nome_razao_social}"

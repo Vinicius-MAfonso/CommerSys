@@ -38,7 +38,16 @@
     </div>
 
     <form method="post" novalidate id="pedidoForm">
-        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>Erros no formulário:</strong>
+                <ul class="mb-0 mt-2">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
         <div class="row">
             <div class="col-lg-8">
                 <div class="card shadow mb-4">
@@ -143,8 +152,17 @@
                                         <div class="text-danger small mt-1">{{ error }}</div>
                                     {% endfor %}
                                 {% endif %}
-                            </div>
-                        </div>
+                            </div>                            <div class="col-md-6 form-group mb-3">
+                                <label for="{{ form.preco_frete.id_for_label }}" 
+                                       class="text-muted small font-weight-bold">Preço do Frete</label>
+                                <small class="form-text text-muted">Custo do transporte (opcional)</small>
+                                {% render_field form.preco_frete|add_error_class:"is-invalid" %}
+                                {% if form.preco_frete.errors %}
+                                    {% for error in form.preco_frete.errors %}
+                                        <div class="text-danger small mt-1">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>                        </div>
                         <div class="row">
                             <div class="col-md-6 form-group mb-3">
                                 <label for="{{ form.peso_bruto.id_for_label }}" 
@@ -174,6 +192,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">
                             Itens do Pedido
                         </h6>
+                        <small class="text-muted">Atalhos: <kbd>Ctrl+I</kbd> para adicionar item, <kbd>Ctrl+Enter</kbd> para salvar</small>
                         <button type="button" class="btn btn-sm btn-success" id="addItemBtn">
                             <i class="fas fa-plus mr-1"></i>Adicionar Item
                         </button>
@@ -188,8 +207,16 @@
                             <div class="row">
                                 <div class="col-md-6 ml-auto">
                                     <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-                                        <span class="h5 mb-0 font-weight-bold text-primary">Valor Total:</span>
-                                        <span class="h4 mb-0 font-weight-bold text-primary" id="total-value">R$ 0,00</span>
+                                        <span class="h5 mb-0 font-weight-bold text-primary">Valor Produtos:</span>
+                                        <span class="h5 mb-0 font-weight-bold text-primary" id="total-value">R$ 0,00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center pt-2">
+                                        <span class="text-muted">+ Frete:</span>
+                                        <span class="text-muted" id="freight-display">R$ 0,00</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                        <span class="h5 mb-0 font-weight-bold text-success">Total c/ Frete:</span>
+                                        <span class="h4 mb-0 font-weight-bold text-success" id="total-with-freight">R$ 0,00</span>
                                     </div>
                                 </div>
                             </div>
@@ -357,13 +384,15 @@
                 <div class="card border-left-warning shadow">
                     <div class="card-body">
                         <h6 class="font-weight-bold text-warning mb-3">
-                            <i class="fas fa-lightbulb mr-2"></i>Dicas
+                            <i class="fas fa-lightbulb mr-2"></i>Dicas e Atalhos
                         </h6>
                         <ul class="small mb-0 pl-3">
                             <li class="mb-2">Campos marcados com * são obrigatórios</li>
                             <li class="mb-2">Preencha os dados fiscais corretamente</li>
                             <li class="mb-2">Configure CFOP e ICMS para cada item</li>
-                            <li>Verifique os pesos antes de salvar</li>
+                            <li class="mb-2">Peso é calculado automaticamente dos produtos</li>
+                            <li class="mb-2"><kbd>Ctrl+I</kbd> adiciona novo item</li>
+                            <li><kbd>Ctrl+Enter</kbd> salva o pedido</li>
                         </ul>
                     </div>
                 </div>

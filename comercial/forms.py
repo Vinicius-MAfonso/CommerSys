@@ -55,6 +55,7 @@ class PedidoForm(forms.ModelForm):
             "peso_bruto",
             "peso_liquido",
             "quantidade_volumes",
+            "preco_frete",
         ]
         widgets = {
             "cliente": forms.Select(attrs={"class": "form-control select2"}),
@@ -69,6 +70,7 @@ class PedidoForm(forms.ModelForm):
             "peso_bruto": forms.TextInput(attrs={"class": "form-control weight"}),
             "peso_liquido": forms.TextInput(attrs={"class": "form-control weight"}),
             "quantidade_volumes": forms.NumberInput(attrs={"class": "form-control"}),
+            "preco_frete": forms.TextInput(attrs={"class": "form-control money-mask", "placeholder": "R$ 0,00"}),
         }
 
 

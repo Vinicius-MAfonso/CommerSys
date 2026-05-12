@@ -61,9 +61,16 @@ $('.phone').inputmask({
 });
 
 $('.weight').inputmask({
-    mask: '9.999,999',
+    mask: '9{1,6}[.9{1,3}]',
     placeholder: "0",   
     showMaskOnHover: false,
     showMaskOnFocus: false, 
     clearMaskOnLostFocus: true,
+    greedy: false,
+    definitions: {
+        '9': {
+            validator: "[0-9]",
+            cardinality: 1
+        }
+    }
 });

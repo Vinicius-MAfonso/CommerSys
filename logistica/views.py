@@ -6,6 +6,10 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
+import json
 from .models import Produto, Transportadora
 from .forms import ProdutoForm, TransportadoraForm
 
@@ -76,3 +80,73 @@ class TransportadoraUpdateView(UpdateView):
 class TransportadoraDeleteView(DeleteView):
     model = Transportadora
     success_url = reverse_lazy("logistica:transportadoras")
+
+
+@require_http_methods(["GET"])
+def api_produtos_list(request):
+    """
+    API endpoint to fetch all active products with relevant details for order items.
+    Returns JSON with product list.
+    """
+    try:
+        produtos = Produto.objects.all().values(
+            'id',
+            'nome',
+            'descricao',
+            'preco_base',
+            'peso_unitario',
+            'ncm',
+            'cest',
+            'cfop_padrao',
+            'unidade_medida',
+            'origem'
+        )
+        
+        produtos_list = list(produtos)
+        
+        return JsonResponse({
+            'success': True,
+            'produtos': produtos_list,
+            'total': len(produtos_list)
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+
+
+@require_http_methods(["GET"])
+def api_produto_detail(request, produto_id):
+    """
+    API endpoint to fetch a single product's details.
+    Returns JSON with product information.
+    """
+    try:
+        produto = Produto.objects.get(id=produto_id)
+        
+        return JsonResponse({
+            'success': True,
+            'produto': {
+                'id': produto.id,
+                'nome': produto.nome,
+                'descricao': produto.descricao,
+                'preco_base': float(produto.preco_base),
+                'ncm': produto.ncm,
+                'cest': produto.cest,
+                'cfop_padrao': produto.cfop_padrao,
+                'unidade_medida': produto.get_unidade_medida_display(),
+                'origem': produto.get_origem_display(),
+            }
+        })
+    except Produto.DoesNotExist:
+        return JsonResponse({
+            'success': False,
+            'error': 'Produto não encontrado'
+        }, status=404)
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'error': str(e)
+        }, status=500)
+

@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'CommerSys.urls'
+ROOT_URLCONF = 'commersys.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'CommerSys.wsgi.application'
+WSGI_APPLICATION = 'commersys.wsgi.application'
 
 
 # Database

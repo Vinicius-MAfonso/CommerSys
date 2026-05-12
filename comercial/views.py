@@ -20,6 +20,45 @@ class PedidoDetailView(DetailView):
     template_name = "comercial/pedido_detail.html"
     context_object_name = "pedido"
 
+class PedidoUpdateView(UpdateView):
+    model = Pedido
+    form_class = PedidoForm
+    template_name = "comercial/pedido_form.html"
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['itens'] = ItemPedidoFormSet(self.request.POST, instance=self.object)
+        else:
+            data['itens'] = ItemPedidoFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        itens = context['itens']
+        with transaction.atomic():
+            self.object = form.save()
+            if itens.is_valid():
+                itens.instance = self.object
+                itens.save()
+                
+                # Calculate and update total value
+                total_value = sum(
+                    item.quantidade * item.preco_unitario 
+                    for item in self.object.itens.all()
+                )
+                self.object.valor_total = total_value
+                self.object.save()
+            else:
+                return self.form_invalid(form)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("comercial:pedido_detail", kwargs={"pk": self.object.pk})
+
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
+
 class PedidoCreateView(CreateView):
     model = Pedido
     form_class = PedidoForm
@@ -42,6 +81,14 @@ class PedidoCreateView(CreateView):
             if itens.is_valid():
                 itens.instance = self.object
                 itens.save()
+                
+                # Calculate and update total value
+                total_value = sum(
+                    item.quantidade * item.preco_unitario 
+                    for item in self.object.itens.all()
+                )
+                self.object.valor_total = total_value
+                self.object.save()
             else:
                 return self.form_invalid(form)
         return super().form_valid(form)
